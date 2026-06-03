@@ -463,13 +463,17 @@ function Committees() {
           style={{ gap: '1px', background: C.border }}
         >
           <AnimatePresence>
-            {filtered.map(c => {
+            {filtered.map((c, i) => {
               const tag = TYPE_TAG[c.type]
+              const cols = 3
+              const orphans = filtered.length % cols
+              const isOrphan = orphans > 0 && i >= filtered.length - orphans
+              const orphanStyle = isOrphan && orphans === 1 ? { gridColumnStart: 2 } : {}
               return (
                 <motion.div key={c.abbr} layout
                   initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                   transition={{ duration: 0.18 }}
-                  style={{ background: C.white, padding: '1.75rem 2rem', transition: 'background 0.18s' }}
+                  style={{ background: C.white, padding: '1.75rem 2rem', transition: 'background 0.18s', ...orphanStyle }}
                   onMouseEnter={e => (e.currentTarget.style.background = C.offWhite)}
                   onMouseLeave={e => (e.currentTarget.style.background = C.white)}
                 >
@@ -525,11 +529,11 @@ const DAYS = [
     day: 'Day 2', date: 'Friday, 16 Oct', label: 'First Substantive Day',
     sessions: [
       { time: '08:30 – 09:15', activity: 'Dais briefing · Morning refreshments' },
-      { time: '09:15 – 11:30', activity: 'Committee Session' },
-      { time: '11:45 – 13:30', activity: 'Committee Session' },
+      { time: '09:15 – 11:30', activity: 'Committee Session II' },
+      { time: '11:45 – 13:30', activity: 'Committee Session III' },
       { time: '13:30 – 14:45', activity: 'Lunch' },
-      { time: '14:45 – 17:15', activity: 'Committee Session' },
-      { time: '17:30 – 18:15', activity: 'Committee Session' },
+      { time: '14:45 – 17:15', activity: 'Committee Session IV' },
+      { time: '17:30 – 18:15', activity: 'Committee Session V' },
       { time: '18:15',         activity: 'Day close' },
     ],
   },
@@ -537,18 +541,18 @@ const DAYS = [
     day: 'Day 3', date: 'Saturday, 17 Oct', label: 'Second Substantive Day',
     sessions: [
       { time: '08:30 – 09:15', activity: 'Dais briefing · Morning refreshments' },
-      { time: '09:15 – 11:30', activity: 'Committee Session' },
-      { time: '11:45 – 13:30', activity: 'Committee Session' },
+      { time: '09:15 – 11:30', activity: 'Committee Session VI' },
+      { time: '11:45 – 13:30', activity: 'Committee Session VII' },
       { time: '13:30 – 14:45', activity: 'Lunch' },
-      { time: '14:45 – 17:15', activity: 'Committee Session' },
-      { time: '17:30 – 18:15', activity: 'Committee Session' },
+      { time: '14:45 – 17:15', activity: 'Committee Session VIII' },
+      { time: '17:30 – 18:15', activity: 'Committee Session IX' },
       { time: '18:15',         activity: 'Day close' },
     ],
   },
   {
     day: 'Day 4', date: 'Sunday, 18 Oct', label: 'Voting & Closing',
     sessions: [
-      { time: '09:00 – 11:00', activity: 'Committee Session' },
+      { time: '09:00 – 11:00', activity: 'Committee Session X' },
       { time: '11:30 – 12:45', activity: 'Final Committee Session' },
       { time: '12:45 – 14:00', activity: 'Lunch' },
       { time: '14:00 – 15:30', activity: 'Closing Ceremony with Awards' },
