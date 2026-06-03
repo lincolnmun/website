@@ -4,7 +4,7 @@ import { useState, useRef } from 'react'
 /* To Do:
 
 1) Fix Comittees Section
-2) Add paragraph for What is Lincoln MUN
+2) Add paragraph for what is Lincoln MUN
 3) Add Google Form for registrations
 4) Confirm Stats in what is Lincoln MUN
 
