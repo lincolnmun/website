@@ -217,15 +217,9 @@ function Hero() {
 
         <motion.h1
           initial={{ opacity: 0, y: 36 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          style={{ fontFamily: F.display, fontWeight: 600, color: C.white, fontSize: 'clamp(4.5rem, 11vw, 10rem)', lineHeight: 0.88, letterSpacing: '-0.01em', marginBottom: '0.35rem' }}
+          style={{ fontFamily: F.display, fontWeight: 600, fontSize: 'clamp(3rem, 9vw, 9rem)', lineHeight: 0.88, letterSpacing: '-0.01em', marginBottom: '2.25rem', whiteSpace: 'nowrap' }}
         >
-          LINCOLN
-        </motion.h1>
-        <motion.h1
-          initial={{ opacity: 0, y: 36 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.92, ease: [0.16, 1, 0.3, 1] }}
-          style={{ fontFamily: F.display, fontWeight: 600, color: C.goldLight, fontSize: 'clamp(4.5rem, 11vw, 10rem)', lineHeight: 0.88, letterSpacing: '-0.01em', marginBottom: '2.25rem' }}
-        >
-          MUN
+          <span style={{ color: C.white }}>LINCOLN</span><span style={{ color: C.goldLight }}>MUN</span>
         </motion.h1>
 
         <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.6, delay: 1.55 }}
@@ -554,8 +548,8 @@ const DAYS = [
   {
     day: 'Day 4', date: 'Sunday, 18 Oct', label: 'Voting & Closing',
     sessions: [
-      { time: '09:00 – 11:00', activity: 'Final Committee Session' },
-      { time: '11:30 – 12:45', activity: 'Voting Procedures' },
+      { time: '09:00 – 11:00', activity: 'Committee Session' },
+      { time: '11:30 – 12:45', activity: 'Final Committee Session' },
       { time: '12:45 – 14:00', activity: 'Lunch' },
       { time: '14:00 – 15:30', activity: 'Closing Ceremony with Awards' },
       { time: '15:30 – 16:15', activity: 'Group photographs · Informal close' },
