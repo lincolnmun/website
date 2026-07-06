@@ -14,5 +14,5 @@ jobs:
 
       - name: Push to munleadership fork
         run: |
-          git remote add fork https://x-access-token:${{ secrets.FORK_DEPLOY_TOKEN }}@github.com/munleadership/website.git
+          git remote add fork https://x-access-token:${{ secrets.FORK_DEPLOY_TOKEN }}@github.com/lincolnmun/website.git
           git push fork main --force
