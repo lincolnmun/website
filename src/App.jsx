@@ -70,26 +70,6 @@ function Rule({ light = false }) {
   )
 }
 
-/* ─── Countdown hook ────────────────────────────────────────────────────── */
-function useCountdown(isoTarget) {
-  const [time, setTime] = useState({ d: 0, h: 0, m: 0, s: 0 })
-  useEffect(() => {
-    const tick = () => {
-      const ms = Math.max(0, new Date(isoTarget) - Date.now())
-      setTime({
-        d: Math.floor(ms / 86400000),
-        h: Math.floor((ms % 86400000) / 3600000),
-        m: Math.floor((ms % 3600000) / 60000),
-        s: Math.floor((ms % 60000) / 1000),
-      })
-    }
-    tick()
-    const id = setInterval(tick, 1000)
-    return () => clearInterval(id)
-  }, [isoTarget])
-  return time
-}
-
 /* ─── Navbar ────────────────────────────────────────────────────────────── */
 const NAV = [
   { label: 'About',        href: '#about' },
@@ -123,13 +103,9 @@ function Navbar() {
       }}
     >
       <a href="#" style={{ display: 'flex', alignItems: 'center', gap: 11, textDecoration: 'none' }}>
-        <img src="/logo.jpg" alt="Escuelas Lincoln" style={{
-          width: 38, height: 38, borderRadius: '50%', objectFit: 'cover',
-          border: '1.5px solid rgba(255,255,255,0.18)',
+        <img src="/logo.png" alt="Escuelas Lincoln" style={{
+          width: 60, height: 60, borderRadius: '50%', objectFit: 'cover',
         }} />
-        <span style={{ fontFamily: F.display, fontSize: '1.1rem', fontWeight: 600, color: C.white, letterSpacing: '0.06em' }}>
-          LINCOLNMUN
-        </span>
       </a>
 
       <div className="hidden md:flex" style={{ alignItems: 'center', gap: 34 }}>
@@ -145,18 +121,6 @@ function Navbar() {
             {label}
           </a>
         ))}
-        <a href="#registration" style={{
-          fontFamily: F.body, fontSize: '0.66rem', fontWeight: 600,
-          letterSpacing: '0.14em', textTransform: 'uppercase',
-          background: C.goldLight, color: C.navy,
-          padding: '0.55rem 1.35rem', textDecoration: 'none',
-          transition: 'background 0.2s',
-        }}
-          onMouseEnter={e => (e.currentTarget.style.background = '#e8a800')}
-          onMouseLeave={e => (e.currentTarget.style.background = C.goldLight)}
-        >
-          Register
-        </a>
       </div>
 
       <button className="md:hidden" onClick={() => setOpen(!open)} style={{
@@ -198,98 +162,54 @@ function Navbar() {
 
 /* ─── Hero ──────────────────────────────────────────────────────────────── */
 function Hero() {
-  const { d, h, m, s } = useCountdown('2026-10-02T16:00:00-03:00')
-
   return (
     <section style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-      <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(/campus.webp)', backgroundSize: 'cover', backgroundPosition: 'center', transform: 'scale(1.03)' }} />
-      <div style={{ position: 'absolute', inset: 0, background: 'rgba(8,13,28,0.70)' }} />
-      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(8,13,28,0.1) 0%, transparent 35%, rgba(8,13,28,0.65) 100%)' }} />
+      <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(/campus.webp)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', transform: 'scale(1.05)' }} />
+      <div style={{ position: 'absolute', inset: 0, background: 'rgba(24,35,67,0.62)' }} />
+      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(0,0,0,0.35), transparent, rgba(0,0,0,0.55))' }} />
 
-      <div style={{ position: 'relative', zIndex: 10, textAlign: 'center', padding: '0 1.5rem', maxWidth: 860, margin: '0 auto' }}>
-
-        <motion.p
-          initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.65 }}
-          style={{ fontFamily: F.body, fontSize: '0.6rem', letterSpacing: '0.34em', textTransform: 'uppercase', fontWeight: 600, color: C.goldLight, marginBottom: '1.75rem' }}
-        >
-          Founding Conference · I Edition
-        </motion.p>
+      <div style={{ position: 'relative', zIndex: 10, textAlign: 'center', color: C.white, padding: '0 1rem', width: '100%', maxWidth: 1280, margin: '2.5rem auto 0' }}>
 
         <motion.h1
-          initial={{ opacity: 0, y: 36 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          style={{ fontFamily: F.display, fontWeight: 600, fontSize: 'clamp(3rem, 9vw, 9rem)', lineHeight: 0.88, letterSpacing: '-0.01em', marginBottom: '2.25rem', whiteSpace: 'nowrap' }}
+          initial={{ opacity: 0, y: 38 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.7, ease: 'easeOut' }}
+          style={{ fontFamily: F.display, fontWeight: 700, fontSize: 'clamp(3.5rem, 8vw, 11rem)', lineHeight: 1, letterSpacing: '-0.01em', textShadow: '0 6px 40px rgba(0,0,0,0.55)' }}
         >
-          <span style={{ color: C.white }}>LINCOLN</span><span style={{ color: C.goldLight }}>MUN</span>
+          LINCOLNMUN
         </motion.h1>
 
-        <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.6, delay: 1.55 }}
-          style={{ width: 44, height: 1, background: 'rgba(255,255,255,0.2)', margin: '0 auto 2rem' }} />
-
-        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 1.65 }}
-          style={{ fontFamily: F.display, fontSize: 'clamp(1rem, 2vw, 1.3rem)', fontStyle: 'italic', color: 'rgba(255,255,255,0.68)', marginBottom: '0.35rem' }}>
+        <motion.p
+          initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, delay: 1.15 }}
+          style={{ fontFamily: F.display, fontSize: 'clamp(1.125rem, 2vw, 1.5rem)', fontStyle: 'italic', marginBottom: '0.25rem' }}
+        >
           Asociación Escuelas Lincoln
         </motion.p>
-        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 1.75 }}
-          style={{ fontFamily: F.body, fontSize: '0.7rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', marginBottom: '3.5rem' }}>
-          2 – 4 October 2026 · Vicente López, Buenos Aires
+
+        <motion.p
+          initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 1.28 }}
+          style={{ fontFamily: F.display, fontSize: 'clamp(0.875rem, 1.5vw, 1rem)', color: 'rgba(255,255,255,0.7)', marginBottom: '0.25rem' }}
+        >
+          October 15th – October 18th 2026 · Vicente López, Buenos Aires
         </motion.p>
 
-        {/* Countdown */}
-        <motion.div
-          initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, delay: 1.9 }}
-          style={{ display: 'inline-flex', border: '1px solid rgba(255,255,255,0.1)', marginBottom: '3rem' }}
+        <motion.a
+          href="#registration"
+          initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 1.45 }}
+          style={{
+            display: 'inline-block', marginTop: '0.25rem',
+            fontFamily: F.body, fontSize: '0.72rem', fontWeight: 600,
+            letterSpacing: '0.16em', textTransform: 'uppercase',
+            background: C.goldLight, color: C.navy,
+            padding: '0.9rem 2.4rem', borderRadius: 2, textDecoration: 'none',
+            boxShadow: '0 8px 30px rgba(0,0,0,0.35)',
+            transition: 'background 0.2s, transform 0.2s',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = '#e8a800'; e.currentTarget.style.transform = 'translateY(-2px)' }}
+          onMouseLeave={e => { e.currentTarget.style.background = C.goldLight; e.currentTarget.style.transform = 'translateY(0)' }}
         >
-          {[{ v: d, l: 'Days' }, { v: h, l: 'Hours' }, { v: m, l: 'Min' }, { v: s, l: 'Sec' }].map(({ v, l }, i) => (
-            <div key={l} style={{
-              padding: 'clamp(1rem, 2vw, 1.4rem) clamp(1.25rem, 3vw, 1.9rem)',
-              textAlign: 'center',
-              borderRight: i < 3 ? '1px solid rgba(255,255,255,0.08)' : 'none',
-            }}>
-              <div style={{ fontFamily: F.display, fontSize: 'clamp(1.75rem, 4vw, 2.75rem)', fontWeight: 600, color: C.white, lineHeight: 1, letterSpacing: '-0.02em' }}>
-                {String(v).padStart(2, '0')}
-              </div>
-              <div style={{ fontFamily: F.body, fontSize: '0.54rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.32)', marginTop: 6 }}>
-                {l}
-              </div>
-            </div>
-          ))}
-        </motion.div>
+          Register
+        </motion.a>
 
-        {/* CTAs */}
-        <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, delay: 2.1 }}
-          style={{ display: 'flex', gap: '0.85rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <a href="#registration" style={{
-            fontFamily: F.body, fontSize: '0.68rem', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase',
-            background: C.goldLight, color: C.navy, padding: '1rem 2.25rem',
-            textDecoration: 'none', transition: 'background 0.2s, transform 0.15s',
-          }}
-            onMouseEnter={e => { e.currentTarget.style.background = '#e8a800'; e.currentTarget.style.transform = 'translateY(-1px)' }}
-            onMouseLeave={e => { e.currentTarget.style.background = C.goldLight; e.currentTarget.style.transform = 'translateY(0)' }}>
-            Register Your School
-          </a>
-          <a href="#about" style={{
-            fontFamily: F.body, fontSize: '0.68rem', fontWeight: 400, letterSpacing: '0.16em', textTransform: 'uppercase',
-            background: 'transparent', color: 'rgba(255,255,255,0.7)',
-            border: '1px solid rgba(255,255,255,0.24)', padding: '1rem 2.25rem',
-            textDecoration: 'none', transition: 'border-color 0.2s, color 0.2s, transform 0.15s',
-          }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.65)'; e.currentTarget.style.color = C.white; e.currentTarget.style.transform = 'translateY(-1px)' }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.24)'; e.currentTarget.style.color = 'rgba(255,255,255,0.7)'; e.currentTarget.style.transform = 'translateY(0)' }}>
-            Learn More
-          </a>
-        </motion.div>
       </div>
-
-      <motion.div
-        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.8 }}
-        style={{ position: 'absolute', bottom: 32, left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 7 }}>
-        <span style={{ fontFamily: F.body, fontSize: '0.54rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.26)' }}>Scroll</span>
-        <motion.div animate={{ y: [0, 5, 0] }} transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}>
-          <svg width="13" height="13" fill="none" stroke="rgba(255,255,255,0.26)" strokeWidth="1.5" viewBox="0 0 24 24">
-            <path d="M12 5v14M5 12l7 7 7-7" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </motion.div>
-      </motion.div>
     </section>
   )
 }
@@ -787,7 +707,7 @@ function Contact() {
 
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: '1.2rem' }}>
-              <img src="/logo.jpg" alt="Lincoln" style={{ width: 34, height: 34, borderRadius: '50%', objectFit: 'cover', opacity: 0.78 }} />
+              <img src="/logo.png" alt="Lincoln" style={{ width: 70, height: 70, borderRadius: '50%', objectFit: 'cover', opacity: 0.78 }} />
               <span style={{ fontFamily: F.display, fontSize: '1rem', fontWeight: 600, color: C.white, letterSpacing: '0.06em' }}>LINCOLNMUN</span>
             </div>
             <p style={{ fontFamily: F.body, fontSize: '0.79rem', lineHeight: 1.8, color: 'rgba(255,255,255,0.33)' }}>
