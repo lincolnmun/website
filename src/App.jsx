@@ -93,9 +93,9 @@ function useCountdown(isoTarget) {
 /* ─── Navbar ────────────────────────────────────────────────────────────── */
 const NAV = [
   { label: 'About',      href: '#about' },
+  { label: 'Letter',     href: '#letter' },
   { label: 'Committees', href: '#committees' },
   { label: 'Schedule',   href: '#schedule' },
-  { label: 'Letter',     href: '#letter' },
 ]
 
 function Navbar() {
@@ -249,7 +249,7 @@ function StatsStrip() {
 /* ─── About ─────────────────────────────────────────────────────────────── */
 function About() {
   return (
-    <section id="about" style={{ background: C.offWhite, padding: '7rem 2.5rem' }}>
+    <section id="about" style={{ background: C.white, padding: '7rem 2.5rem' }}>
       <div className="grid grid-cols-1 md:grid-cols-2" style={{ maxWidth: 1100, margin: '0 auto', gap: '5rem', alignItems: 'stretch' }}>
 
         <Reveal>
@@ -346,7 +346,7 @@ function CommitteeCard({ c, onOpen }) {
       />
       <div style={{
         position: 'absolute', inset: 0,
-        background: 'linear-gradient(to top, rgba(24,35,67,0.94) 0%, rgba(24,35,67,0.62) 45%, rgba(24,35,67,0.30) 100%)',
+        background: 'linear-gradient(to top, rgba(8, 13, 28) 0%, rgba(24,35,67,0.62) 45%, rgba(24,35,67,0.30) 100%)',
       }} />
       <div style={{
         position: 'absolute', inset: 0, display: 'flex', alignItems: 'center',
@@ -494,18 +494,18 @@ function Committees() {
   const handleToggle = (abbr) => setModal(abbr)
 
   return (
-    <section id="committees" style={{ background: C.white, padding: '7rem 2.5rem' }}>
+    <section id="committees" style={{ background: C.navy, padding: '7rem 2.5rem' }}>
       <div style={{ maxWidth: 1100, margin: '0 auto' }}>
         <Reveal>
           <div className="flex flex-col md:flex-row md:items-end" style={{ justifyContent: 'space-between', gap: '2rem', marginBottom: '1.5rem' }}>
             <motion.h2 variants={fadeUp} style={{
-              fontFamily: F.display, fontWeight: 600, color: C.text,
+              fontFamily: F.display, fontWeight: 600, color: C.white,
               fontSize: 'clamp(2.25rem, 4vw, 3.5rem)', lineHeight: 1.08, letterSpacing: '-0.02em',
             }}>
               Committees
             </motion.h2>
 
-            <motion.div variants={fadeUp} style={{ display: 'flex', border: `1px solid ${C.border}` }}>
+            <motion.div variants={fadeUp} style={{ display: 'flex', border: `1px solid rgba(255,255,255,0.15)` }}>
               {[
                 { key: 'all', label: 'All · 13' },
                 { key: 'en',  label: 'English · 9' },
@@ -514,9 +514,9 @@ function Committees() {
                 <button key={key} onClick={() => handleLangChange(key)} style={{
                   fontFamily: F.body, fontSize: '0.64rem', letterSpacing: '0.1em', textTransform: 'uppercase',
                   padding: '0.65rem 1.2rem', border: 'none', cursor: 'pointer',
-                  borderRight: i < 2 ? `1px solid ${C.border}` : 'none',
-                  background: lang === key ? C.navy : 'transparent',
-                  color: lang === key ? C.white : C.muted,
+                  borderRight: i < 2 ? `1px solid rgba(255,255,255,0.15)` : 'none',
+                  background: lang === key ? C.goldLight : 'transparent',
+                  color: lang === key ? C.navyDark : 'rgba(255,255,255,0.55)',
                   fontWeight: lang === key ? 600 : 400,
                   transition: 'background 0.18s, color 0.18s',
                 }}>
@@ -603,7 +603,7 @@ function Schedule() {
   const [day, setDay] = useState(0)
 
   return (
-    <section id="schedule" style={{ background: C.navyDark, padding: '7rem 2.5rem' }}>
+    <section id="schedule" style={{ background: C.navyMid, padding: '7rem 2.5rem' }}>
       <div style={{ maxWidth: 860, margin: '0 auto' }}>
         <Reveal>
           <motion.h2 variants={fadeUp} style={{
@@ -659,43 +659,43 @@ function Schedule() {
 /* ─── Letter ─────────────────────────────────────────────────────────────── */
 function Letter() {
   return (
-    <section id="letter" style={{ background: C.navy, padding: '7rem 2.5rem' }}>
+    <section id="letter" style={{ background: C.offWhite, padding: '7rem 2.5rem' }}>
       <div style={{ maxWidth: 680, margin: '0 auto' }}>
         <Reveal>
           <motion.h2 variants={fadeUp} style={{
-            fontFamily: F.display, fontWeight: 600, color: C.white,
+            fontFamily: F.display, fontWeight: 600, color: C.text,
             fontSize: 'clamp(2rem, 4vw, 3rem)', lineHeight: 1.1, letterSpacing: '-0.02em', marginBottom: '2.5rem',
           }}>
             A letter from the<br />Secretaries-General
           </motion.h2>
 
           <motion.div variants={fadeUp} style={{
-            borderLeft: `2px solid ${C.gold}`, paddingLeft: '1.75rem',
+            
           }}>
             <div style={{ marginTop: '1rem' }}>
-              <p style={{ fontFamily: F.body, fontSize: '0.78rem', color: 'rgba(255,255,255,0.38)', marginBottom: '2rem', fontStyle: 'italic' }}>
+              <p style={{ fontFamily: F.body, fontSize: '0.78rem', color: C.muted, marginBottom: '2rem', fontStyle: 'italic' }}>
                 Best regards,
               </p>
-              <p style={{ fontFamily: F.display, fontSize: '1.05rem', fontWeight: 600, color: C.white, marginBottom: '0.15rem' }}>
+              <p style={{ fontFamily: F.display, fontSize: '1.05rem', fontWeight: 600, color: C.text, marginBottom: '0.15rem' }}>
                 Manav Purswani
               </p>
-              <p style={{ fontFamily: F.body, fontSize: '0.68rem', color: 'rgba(255,255,255,0.38)', marginBottom: '1.5rem' }}>
+              <p style={{ fontFamily: F.body, fontSize: '0.68rem', color: C.muted, marginBottom: '1.5rem' }}>
                 Founding Secretary-General, LINCOLNMUN
               </p>
-              <p style={{ fontFamily: F.display, fontSize: '1.05rem', fontWeight: 600, color: C.white, marginBottom: '0.15rem' }}>
+              <p style={{ fontFamily: F.display, fontSize: '1.05rem', fontWeight: 600, color: C.text, marginBottom: '0.15rem' }}>
                 Cata Gamero
               </p>
-              <p style={{ fontFamily: F.body, fontSize: '0.68rem', color: 'rgba(255,255,255,0.38)', marginBottom: '1.5rem' }}>
+              <p style={{ fontFamily: F.body, fontSize: '0.68rem', color: C.muted, marginBottom: '1.5rem' }}>
                 Founding Secretary-General, LINCOLNMUN
               </p>
-              <p style={{ fontFamily: F.body, fontSize: '0.63rem', color: 'rgba(255,255,255,0.22)', letterSpacing: '0.04em' }}>
+              <p style={{ fontFamily: F.body, fontSize: '0.63rem', color: 'rgba(15,23,42,0.45)', letterSpacing: '0.04em' }}>
                 Asociación Escuelas Lincoln, Buenos Aires, Argentina, 2026
               </p>
             </div>
           </motion.div>
 
-          <motion.div variants={fadeUp} style={{ marginTop: '3rem', paddingTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-            <p style={{ fontFamily: F.body, fontSize: '0.78rem', color: 'rgba(255,255,255,0.35)', marginBottom: '1.1rem' }}>
+          <motion.div variants={fadeUp} style={{ marginTop: '3rem', paddingTop: '2rem', borderTop: `1px solid ${C.border}` }}>
+            <p style={{ fontFamily: F.body, fontSize: '0.78rem', color: C.muted, marginBottom: '1.1rem' }}>
               Questions about registration, committees, or logistics?
             </p>
             <a
@@ -721,7 +721,7 @@ function Letter() {
 /* ─── Contact ────────────────────────────────────────────────────────────── */
 function Contact() {
   return (
-    <section id="contact" style={{ background: C.navyMid, padding: '5rem 2.5rem', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+    <section id="contact" style={{ background: C.navyDark, padding: '5rem 2.5rem', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
       <Reveal>
         <div className="grid grid-cols-1 md:grid-cols-3" style={{ maxWidth: 1100, margin: '0 auto', gap: '3.5rem' }}>
 
@@ -800,9 +800,9 @@ export default function App() {
       <Hero />
       <StatsStrip />
       <About />
+      <Letter />
       <Committees />
       <Schedule />
-      <Letter />
       <Contact />
       <Footer />
     </>
