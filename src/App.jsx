@@ -95,7 +95,7 @@ function Navbar() {
       transition={{ duration: 0.6, delay: 0.2 }}
       style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-        height: 66, display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        height: 100, display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         padding: '0 2.75rem',
         background: solid ? C.navy : 'transparent',
         borderBottom: solid ? '1px solid rgba(255,255,255,0.06)' : 'none',
@@ -104,7 +104,7 @@ function Navbar() {
     >
       <a href="#" style={{ display: 'flex', alignItems: 'center', gap: 11, textDecoration: 'none' }}>
         <img src="/logo.png" alt="Escuelas Lincoln" style={{
-          width: 60, height: 60, borderRadius: '50%', objectFit: 'cover',
+          width: 100, height: 100, borderRadius: '50%', objectFit: 'cover',
         }} />
       </a>
 
@@ -188,7 +188,7 @@ function Hero() {
           initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 1.28 }}
           style={{ fontFamily: F.display, fontSize: 'clamp(0.875rem, 1.5vw, 1rem)', color: 'rgba(255,255,255,0.7)', marginBottom: '0.25rem' }}
         >
-          October 15th – October 18th 2026 · Vicente López, Buenos Aires
+          October 2nd – October 4th 2026 · Vicente López, Buenos Aires
         </motion.p>
 
         <motion.a
@@ -228,11 +228,11 @@ function StatsStrip() {
       <div className="grid grid-cols-3 md:grid-cols-5" style={{ maxWidth: 1100, margin: '0 auto' }}>
         {items.map(({ v, l }, i) => (
           <div key={l} style={{
-            padding: '1.5rem 0.75rem', textAlign: 'center',
+            padding: '5rem 0.75rem', textAlign: 'center',
             borderRight: i < 4 ? '1px solid rgba(255,255,255,0.05)' : 'none',
           }}>
-            <div style={{ fontFamily: F.display, fontSize: '2rem', fontWeight: 600, color: C.goldLight, lineHeight: 1 }}>{v}</div>
-            <div style={{ fontFamily: F.body, fontSize: '0.57rem', letterSpacing: '0.17em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.33)', marginTop: 6 }}>{l}</div>
+            <div style={{ fontFamily: F.display, fontSize: '2.8rem', fontWeight: 600, color: C.goldLight, lineHeight: 1 }}>{v}</div>
+            <div style={{ fontFamily: F.body, fontSize: '0.85rem', letterSpacing: '0.17em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.33)', marginTop: 6 }}>{l}</div>
           </div>
         ))}
       </div>
@@ -247,8 +247,7 @@ function About() {
       <div className="grid grid-cols-1 md:grid-cols-2" style={{ maxWidth: 1100, margin: '0 auto', gap: '5rem', alignItems: 'start' }}>
 
         <Reveal>
-          <Label>About the Conference</Label>
-          <Rule />
+
           <motion.h2 variants={fadeUp} style={{
             fontFamily: F.display, fontWeight: 600, color: C.text,
             fontSize: 'clamp(2.4rem, 4vw, 3.75rem)', lineHeight: 1.08,
@@ -257,21 +256,12 @@ function About() {
             What is<br />LincolnMUN?
           </motion.h2>
           <motion.p variants={fadeUp} style={{ fontFamily: F.body, fontSize: '0.95rem', lineHeight: 1.85, color: '#334155', marginBottom: '1.35rem' }}>
-            LINCOLNMUN is the inaugural student-founded Model United Nations conference of Asociación Escuelas Lincoln. Designed as a recurring, twice-yearly institution — LINCOLNMUN I in October 2026 and LINCOLNMUN II in April 2027 — it is hosted on the Lincoln campus in Vicente López and open to secondary-school delegations across Buenos Aires Province and the broader region.
+            LINCOLNMUN is a three-day Model UN conference founded for secondary school students by secondary school students in the Buenos Aires region. Delegates step into the roles of UN representatives, historical figures, and influential persons to address key global challenges while building skills in leadership and public speaking.          </motion.p>
+          <motion.p variants={fadeUp} style={{ fontFamily: F.body, fontSize: '0.95rem', lineHeight: 1.85, color: '#334155', marginBottom: '2.25rem' }}>
+            From the opening ceremony to the closing asado, every element of the conference is run by students. Beyond delegating, students may apply to chair across any of our thirteen committees, presenting a unique opportunity for students to assume leadership roles before committee sessions begin.
           </motion.p>
           <motion.p variants={fadeUp} style={{ fontFamily: F.body, fontSize: '0.95rem', lineHeight: 1.85, color: '#334155', marginBottom: '2.25rem' }}>
-            It is simultaneously a conference and the IB Diploma CAS project of the Founding Secretaries-General — built with the rigour and documentation standards of a professional institution, because that is what it is intended to become.
-          </motion.p>
-          <motion.blockquote variants={fadeUp} style={{
-            borderLeft: `2px solid ${C.gold}`, paddingLeft: '1.4rem',
-            fontFamily: F.display, fontSize: '1.15rem', fontStyle: 'italic',
-            color: C.navy, lineHeight: 1.6,
-          }}>
-            "To give Buenos Aires schools consistent, local, and affordable access to a rigorous conference — and to build it as an institution that outlasts its founders."
-            <footer style={{ fontFamily: F.body, fontSize: '0.63rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: C.muted, marginTop: '0.7rem', fontStyle: 'normal' }}>
-              — Founding Mission
-            </footer>
-          </motion.blockquote>
+            LINCOLNMUN welcomes experienced and first-time delegations alike, matching delegates to roles that meet each school where they are. Bilingual by design, two-thirds of our committees run in English and one-third in Spanish, making LINCOLNMUN the most balanced bilingual Model UN conference in Argentina.          </motion.p>
         </Reveal>
 
         <Reveal>
@@ -292,23 +282,7 @@ function About() {
             ))}
           </motion.div>
 
-          <motion.div variants={fadeUp} className="grid grid-cols-2" style={{ background: C.white, border: `1px solid ${C.border}` }}>
-            {[
-              { l: 'Date',     v: '2–4 Oct 2026' },
-              { l: 'Location', v: 'Vicente López, BA' },
-              { l: 'Format',   v: '3 Conference Days' },
-              { l: 'Scale',    v: 'Up to 300 Delegates' },
-            ].map(({ l, v }, i) => (
-              <div key={l} style={{
-                padding: '1.4rem 1.75rem',
-                borderRight: i % 2 === 0 ? `1px solid ${C.border}` : 'none',
-                borderBottom: i < 2 ? `1px solid ${C.border}` : 'none',
-              }}>
-                <p style={{ fontFamily: F.body, fontSize: '0.57rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: C.muted, marginBottom: '0.4rem' }}>{l}</p>
-                <p style={{ fontFamily: F.display, fontSize: '1.2rem', fontWeight: 600, color: C.navy }}>{v}</p>
-              </div>
-            ))}
-          </motion.div>
+          
         </Reveal>
       </div>
     </section>
