@@ -70,12 +70,32 @@ function Rule({ light = false }) {
   )
 }
 
+/* ─── Countdown hook ────────────────────────────────────────────────────── */
+function useCountdown(isoTarget) {
+  const [time, setTime] = useState({ d: 0, h: 0, m: 0, s: 0 })
+  useEffect(() => {
+    const tick = () => {
+      const ms = Math.max(0, new Date(isoTarget) - Date.now())
+      setTime({
+        d: Math.floor(ms / 86400000),
+        h: Math.floor((ms % 86400000) / 3600000),
+        m: Math.floor((ms % 3600000) / 60000),
+        s: Math.floor((ms % 60000) / 1000),
+      })
+    }
+    tick()
+    const id = setInterval(tick, 1000)
+    return () => clearInterval(id)
+  }, [isoTarget])
+  return time
+}
+
 /* ─── Navbar ────────────────────────────────────────────────────────────── */
 const NAV = [
-  { label: 'About',        href: '#about' },
-  { label: 'Committees',   href: '#committees' },
-  { label: 'Schedule',     href: '#schedule' },
-  { label: 'Registration', href: '#registration' },
+  { label: 'About',      href: '#about' },
+  { label: 'Committees', href: '#committees' },
+  { label: 'Schedule',   href: '#schedule' },
+  { label: 'Letter',     href: '#letter' },
 ]
 
 function Navbar() {
@@ -143,7 +163,7 @@ function Navbar() {
               borderTop: '1px solid rgba(255,255,255,0.06)',
             }}
           >
-            {[...NAV, { label: 'Register', href: '#registration' }].map(({ label, href }) => (
+            {NAV.map(({ label, href }) => (
               <a key={label} href={href} onClick={() => setOpen(false)} style={{
                 display: 'block', fontFamily: F.body, fontSize: '0.72rem',
                 letterSpacing: '0.16em', textTransform: 'uppercase',
@@ -162,6 +182,8 @@ function Navbar() {
 
 /* ─── Hero ──────────────────────────────────────────────────────────────── */
 function Hero() {
+  const { d, h, m, s } = useCountdown('2026-10-02T16:00:00-03:00')
+
   return (
     <section style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
       <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(/campus.webp)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', transform: 'scale(1.05)' }} />
@@ -186,28 +208,30 @@ function Hero() {
 
         <motion.p
           initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 1.28 }}
-          style={{ fontFamily: F.display, fontSize: 'clamp(0.875rem, 1.5vw, 1rem)', color: 'rgba(255,255,255,0.7)', marginBottom: '0.25rem' }}
+          style={{ fontFamily: F.display, fontSize: 'clamp(0.875rem, 1.5vw, 1rem)', color: 'rgba(255,255,255,0.7)', marginBottom: '2rem' }}
         >
           October 2nd – October 4th 2026 · Vicente López, Buenos Aires
         </motion.p>
 
-        <motion.a
-          href="#registration"
-          initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 1.45 }}
-          style={{
-            display: 'inline-block', marginTop: '0.25rem',
-            fontFamily: F.body, fontSize: '0.72rem', fontWeight: 600,
-            letterSpacing: '0.16em', textTransform: 'uppercase',
-            background: C.goldLight, color: C.navy,
-            padding: '0.9rem 2.4rem', borderRadius: 2, textDecoration: 'none',
-            boxShadow: '0 8px 30px rgba(0,0,0,0.35)',
-            transition: 'background 0.2s, transform 0.2s',
-          }}
-          onMouseEnter={e => { e.currentTarget.style.background = '#e8a800'; e.currentTarget.style.transform = 'translateY(-2px)' }}
-          onMouseLeave={e => { e.currentTarget.style.background = C.goldLight; e.currentTarget.style.transform = 'translateY(0)' }}
+        <motion.div
+          initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, delay: 1.45 }}
+          style={{ display: 'inline-flex', border: '1px solid rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)' }}
         >
-          Register
-        </motion.a>
+          {[{ v: d, l: 'Days' }, { v: h, l: 'Hours' }, { v: m, l: 'Min' }, { v: s, l: 'Sec' }].map(({ v, l }, i) => (
+            <div key={l} style={{
+              padding: 'clamp(0.9rem, 2vw, 1.3rem) clamp(1.1rem, 2.5vw, 1.75rem)',
+              textAlign: 'center',
+              borderRight: i < 3 ? '1px solid rgba(255,255,255,0.1)' : 'none',
+            }}>
+              <div style={{ fontFamily: F.display, fontSize: 'clamp(1.6rem, 3.5vw, 2.5rem)', fontWeight: 600, color: C.white, lineHeight: 1, letterSpacing: '-0.02em' }}>
+                {String(v).padStart(2, '0')}
+              </div>
+              <div style={{ fontFamily: F.body, fontSize: '0.52rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', marginTop: 5 }}>
+                {l}
+              </div>
+            </div>
+          ))}
+        </motion.div>
 
       </div>
     </section>
@@ -253,7 +277,7 @@ function About() {
             fontSize: 'clamp(2.4rem, 4vw, 3.75rem)', lineHeight: 1.08,
             letterSpacing: '-0.02em', marginBottom: '2rem',
           }}>
-            What is<br />LincolnMUN?
+            What is<br />LINCOLNMUN?
           </motion.h2>
           <motion.p variants={fadeUp} style={{ fontFamily: F.body, fontSize: '0.95rem', lineHeight: 1.85, color: '#334155', marginBottom: '1.35rem' }}>
             LINCOLNMUN is a three-day Model UN conference founded for secondary school students by secondary school students in the Buenos Aires region. Delegates step into the roles of UN representatives, historical figures, and influential persons to address key global challenges while building skills in leadership and public speaking.          </motion.p>
@@ -270,10 +294,10 @@ function About() {
               Founding Objectives
             </p>
             {[
-              { t: 'Rigour',     d: 'A well-chaired conference worth returning to — ≥85% of faculty advisors rate the overall experience ≥7/10.' },
-              { t: 'Access',     d: 'At least one third of attending schools have no standing MUN programme, widening the regional circuit.' },
-              { t: 'Continuity', d: 'Full documentation archive; asociación civil constituted 2026; structured handover to future Secretariats.' },
-              { t: 'Integrity',  d: 'Balanced budget with contingency intact; clean post-conference financial report shared with administration.' },
+              { t: 'Quality',    d: 'Well-prepared chairs, clear rules of procedure, and committees that stay on topic.' },
+              { t: 'Access',     d: 'Affordable registration and local venue so more schools can participate, not just those with travel budgets.' },
+              { t: 'Continuity', d: 'Run it twice, document everything, and hand it off so the next Secretariat can actually use what we built.' },
+              { t: 'Integrity',  d: 'Balanced books, transparent reporting, and no surprises for the school administration.' },
             ].map(({ t, d }, i) => (
               <div key={t} style={{ paddingBottom: i < 3 ? '1.5rem' : 0, marginBottom: i < 3 ? '1.5rem' : 0, borderBottom: i < 3 ? '1px solid rgba(255,255,255,0.06)' : 'none' }}>
                 <p style={{ fontFamily: F.display, fontSize: '1.05rem', fontWeight: 600, color: C.white, marginBottom: '0.3rem' }}>{t}</p>
@@ -312,24 +336,17 @@ const TYPE_TAG = {
   crisis:        { label: 'Crisis',          bg: 'rgba(170,110,0,0.09)',  fg: '#7A5200' },
 }
 
-function CommitteeCard({ c, isExpanded, onToggle }) {
+function CommitteeCard({ c, onOpen }) {
   const tag = TYPE_TAG[c.type]
-  const isTBC = v => v === 'TBC'
-
   return (
     <motion.div
       layout
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
       transition={{ duration: 0.18 }}
-      onClick={onToggle}
-      style={{
-        background: C.white, padding: '1.75rem 2rem', cursor: 'pointer',
-        transition: 'background 0.18s',
-        outline: isExpanded ? `1.5px solid ${C.gold}` : 'none',
-        outlineOffset: -1,
-      }}
-      onMouseEnter={e => { if (!isExpanded) e.currentTarget.style.background = C.offWhite }}
-      onMouseLeave={e => { if (!isExpanded) e.currentTarget.style.background = C.white }}
+      onClick={onOpen}
+      style={{ background: C.white, padding: '1.75rem 2rem', cursor: 'pointer', transition: 'background 0.18s' }}
+      onMouseEnter={e => { e.currentTarget.style.background = C.offWhite }}
+      onMouseLeave={e => { e.currentTarget.style.background = C.white }}
     >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
         <span style={{ fontFamily: F.body, fontSize: '0.6rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: C.gold, fontWeight: 700 }}>
@@ -358,88 +375,142 @@ function CommitteeCard({ c, isExpanded, onToggle }) {
         </div>
       </div>
 
-      {/* Chevron */}
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '0.85rem' }}>
-        <motion.svg
-          animate={{ rotate: isExpanded ? 180 : 0 }}
-          transition={{ duration: 0.22 }}
-          width="14" height="14" fill="none"
-          stroke={isExpanded ? C.gold : C.muted}
-          strokeWidth="1.8" viewBox="0 0 24 24"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M6 9l6 6 6-6" />
-        </motion.svg>
+        <svg width="14" height="14" fill="none" stroke={C.muted} strokeWidth="1.8" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 12H9m6 0l-3-3m3 3l-3 3" />
+        </svg>
       </div>
+    </motion.div>
+  )
+}
 
-      {/* Expandable details */}
-      <AnimatePresence initial={false}>
-        {isExpanded && (
-          <motion.div
-            key="details"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-            style={{ overflow: 'hidden' }}
-          >
-            <div style={{ paddingTop: '1.25rem', marginTop: '1rem', borderTop: `1px solid ${C.border}` }}>
+function CommitteeModal({ c, onClose }) {
+  const isTBC = v => v === 'TBC'
+  const tag = TYPE_TAG[c.type]
 
-              {/* Room & Seats */}
-              <div className="grid grid-cols-2" style={{ gap: '0.6rem', marginBottom: '0.85rem' }}>
-                {[
-                  { label: 'Room', value: c.room },
-                  { label: 'Seats', value: `${c.seats} delegates` },
-                ].map(({ label, value }) => (
-                  <div key={label} style={{ background: C.offWhite, padding: '0.7rem 0.9rem' }}>
-                    <p style={{ fontFamily: F.body, fontSize: '0.5rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: C.muted, marginBottom: '0.25rem' }}>{label}</p>
-                    <p style={{ fontFamily: F.body, fontSize: '0.78rem', fontWeight: 600, color: C.navy }}>{value}</p>
-                  </div>
-                ))}
-              </div>
+  const handleKey = (e) => { if (e.key === 'Escape') onClose() }
+  const ref = useRef(null)
+  useEffect(() => { ref.current?.focus() }, [])
 
-              {/* Chairs & Contact */}
-              <div style={{ padding: '0.8rem 0.9rem', border: `1px solid ${C.border}`, marginBottom: '0.85rem' }}>
-                {[
-                  { label: 'Chairs', value: c.chairs },
-                  { label: 'Chair Contact', value: c.contact },
-                ].map(({ label, value }, i) => (
-                  <div key={label} style={{
-                    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                    paddingBottom: i === 0 ? '0.55rem' : 0, marginBottom: i === 0 ? '0.55rem' : 0,
-                    borderBottom: i === 0 ? `1px solid ${C.border}` : 'none',
-                  }}>
-                    <p style={{ fontFamily: F.body, fontSize: '0.5rem', letterSpacing: '0.16em', textTransform: 'uppercase', color: C.muted }}>{label}</p>
-                    <p style={{ fontFamily: F.body, fontSize: '0.75rem', color: isTBC(value) ? C.muted : C.navy, fontStyle: isTBC(value) ? 'italic' : 'normal' }}>{value}</p>
-                  </div>
-                ))}
-              </div>
+  return (
+    <motion.div
+      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+      transition={{ duration: 0.18 }}
+      onClick={onClose}
+      style={{
+        position: 'fixed', inset: 0, zIndex: 9999,
+        background: 'rgba(10,15,35,0.72)', backdropFilter: 'blur(4px)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        padding: '1rem',
+      }}
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 24, scale: 0.97 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: 16, scale: 0.97 }}
+        transition={{ duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
+        onClick={e => e.stopPropagation()}
+        onKeyDown={handleKey}
+        tabIndex={-1}
+        ref={ref}
+        style={{
+          background: C.white, maxWidth: 480, width: '100%',
+          maxHeight: '90vh', overflowY: 'auto',
+          padding: '2.25rem 2.25rem 2rem',
+          outline: 'none',
+        }}
+      >
+        {/* Header */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
+          <div>
+            <p style={{ fontFamily: F.body, fontSize: '0.6rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: C.gold, fontWeight: 700, marginBottom: '0.35rem' }}>
+              {c.abbr}
+            </p>
+            <h2 style={{ fontFamily: F.display, fontSize: '1.55rem', fontWeight: 600, color: C.navy, lineHeight: 1.2 }}>
+              {c.name}
+            </h2>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8 }}>
+            <span style={{ fontFamily: F.body, fontSize: '0.55rem', letterSpacing: '0.1em', textTransform: 'uppercase', padding: '0.22rem 0.55rem', background: tag.bg, color: tag.fg, fontWeight: 600 }}>
+              {tag.label}
+            </span>
+            <button
+              onClick={onClose}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '2px', lineHeight: 0 }}
+              aria-label="Close"
+            >
+              <svg width="18" height="18" fill="none" stroke={C.muted} strokeWidth="1.8" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
 
-              {/* Topics */}
-              <div>
-                <p style={{ fontFamily: F.body, fontSize: '0.5rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: C.muted, marginBottom: '0.5rem' }}>Topics</p>
-                {[{ n: 'I', v: c.topic1 }, { n: 'II', v: c.topic2 }].map(({ n, v }) => (
-                  <div key={n} style={{ display: 'flex', gap: '0.65rem', alignItems: 'flex-start', marginBottom: '0.35rem' }}>
-                    <span style={{ fontFamily: F.display, fontSize: '0.85rem', color: C.gold, fontWeight: 600, minWidth: 18, lineHeight: 1.5 }}>{n}</span>
-                    <span style={{ fontFamily: F.body, fontSize: '0.78rem', color: isTBC(v) ? C.muted : C.text, fontStyle: isTBC(v) ? 'italic' : 'normal', lineHeight: 1.55 }}>{v}</span>
-                  </div>
-                ))}
-              </div>
-
+        {/* Room & Seats */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem', marginBottom: '0.85rem' }}>
+          {[
+            { label: 'Room', value: c.room },
+            { label: 'Seats', value: `${c.seats} delegates` },
+          ].map(({ label, value }) => (
+            <div key={label} style={{ background: C.offWhite, padding: '0.7rem 0.9rem' }}>
+              <p style={{ fontFamily: F.body, fontSize: '0.5rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: C.muted, marginBottom: '0.25rem' }}>{label}</p>
+              <p style={{ fontFamily: F.body, fontSize: '0.78rem', fontWeight: 600, color: C.navy }}>{value}</p>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          ))}
+        </div>
+
+        {/* Lang & Note */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem', marginBottom: '0.85rem' }}>
+          {[
+            { label: 'Language', value: c.lang === 'es' ? 'Español' : 'English' },
+            { label: 'Level', value: c.note },
+          ].map(({ label, value }) => (
+            <div key={label} style={{ background: C.offWhite, padding: '0.7rem 0.9rem' }}>
+              <p style={{ fontFamily: F.body, fontSize: '0.5rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: C.muted, marginBottom: '0.25rem' }}>{label}</p>
+              <p style={{ fontFamily: F.body, fontSize: '0.78rem', fontWeight: 600, color: C.navy }}>{value}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Chairs & Contact */}
+        <div style={{ padding: '0.8rem 0.9rem', border: `1px solid ${C.border}`, marginBottom: '0.85rem' }}>
+          {[
+            { label: 'Chairs', value: c.chairs },
+            { label: 'Chair Contact', value: c.contact },
+          ].map(({ label, value }, i) => (
+            <div key={label} style={{
+              display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+              paddingBottom: i === 0 ? '0.55rem' : 0, marginBottom: i === 0 ? '0.55rem' : 0,
+              borderBottom: i === 0 ? `1px solid ${C.border}` : 'none',
+            }}>
+              <p style={{ fontFamily: F.body, fontSize: '0.5rem', letterSpacing: '0.16em', textTransform: 'uppercase', color: C.muted }}>{label}</p>
+              <p style={{ fontFamily: F.body, fontSize: '0.75rem', color: isTBC(value) ? C.muted : C.navy, fontStyle: isTBC(value) ? 'italic' : 'normal' }}>{value}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Topics */}
+        <div>
+          <p style={{ fontFamily: F.body, fontSize: '0.5rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: C.muted, marginBottom: '0.6rem' }}>Topics</p>
+          {[{ n: 'I', v: c.topic1 }, { n: 'II', v: c.topic2 }].map(({ n, v }) => (
+            <div key={n} style={{ display: 'flex', gap: '0.65rem', alignItems: 'flex-start', marginBottom: '0.4rem' }}>
+              <span style={{ fontFamily: F.display, fontSize: '0.85rem', color: C.gold, fontWeight: 600, minWidth: 18, lineHeight: 1.5 }}>{n}</span>
+              <span style={{ fontFamily: F.body, fontSize: '0.78rem', color: isTBC(v) ? C.muted : C.text, fontStyle: isTBC(v) ? 'italic' : 'normal', lineHeight: 1.55 }}>{v}</span>
+            </div>
+          ))}
+        </div>
+      </motion.div>
     </motion.div>
   )
 }
 
 function Committees() {
   const [lang, setLang] = useState('all')
-  const [expanded, setExpanded] = useState(null)
+  const [modal, setModal] = useState(null)
   const filtered = lang === 'all' ? COMMITTEES : COMMITTEES.filter(c => c.lang === lang)
 
-  const handleLangChange = (key) => { setLang(key); setExpanded(null) }
-  const handleToggle = (abbr) => setExpanded(prev => prev === abbr ? null : abbr)
+  const handleLangChange = (key) => { setLang(key) }
+  const handleToggle = (abbr) => setModal(abbr)
 
   return (
     <section id="committees" style={{ background: C.white, padding: '7rem 2.5rem' }}>
@@ -492,17 +563,20 @@ function Committees() {
               const orphanStyle = isOrphan && orphans === 1 ? { gridColumnStart: 2 } : {}
               return (
                 <div key={c.abbr} style={orphanStyle}>
-                  <CommitteeCard
-                    c={c}
-                    isExpanded={expanded === c.abbr}
-                    onToggle={() => handleToggle(c.abbr)}
-                  />
+                  <CommitteeCard c={c} onOpen={() => handleToggle(c.abbr)} />
                 </div>
               )
             })}
           </AnimatePresence>
         </motion.div>
       </div>
+
+      <AnimatePresence>
+        {modal && (() => {
+          const c = COMMITTEES.find(x => x.abbr === modal)
+          return c ? <CommitteeModal key={modal} c={c} onClose={() => setModal(null)} /> : null
+        })()}
+      </AnimatePresence>
     </section>
   )
 }
@@ -608,62 +682,62 @@ function Schedule() {
   )
 }
 
-/* ─── Registration ───────────────────────────────────────────────────────── */
-function Registration() {
+/* ─── Letter ─────────────────────────────────────────────────────────────── */
+function Letter() {
   return (
-    <section id="registration" style={{ background: C.navy, padding: '7rem 2.5rem' }}>
-      <div className="grid grid-cols-1 md:grid-cols-2" style={{ maxWidth: 1100, margin: '0 auto', gap: '5rem', alignItems: 'start' }}>
-
+    <section id="letter" style={{ background: C.navy, padding: '7rem 2.5rem' }}>
+      <div style={{ maxWidth: 680, margin: '0 auto' }}>
         <Reveal>
-          <Label light>Registration · Edition I</Label>
+          <Label light>From the Secretariat</Label>
           <Rule light />
           <motion.h2 variants={fadeUp} style={{
             fontFamily: F.display, fontWeight: 600, color: C.white,
-            fontSize: 'clamp(2.25rem, 4vw, 3.5rem)', lineHeight: 1.08, letterSpacing: '-0.02em', marginBottom: '1.5rem',
+            fontSize: 'clamp(2rem, 4vw, 3rem)', lineHeight: 1.1, letterSpacing: '-0.02em', marginBottom: '2.5rem',
           }}>
-            Join the<br />Founding Edition
+            A letter from the<br />Secretaries-General
           </motion.h2>
-          <motion.p variants={fadeUp} style={{ fontFamily: F.body, fontSize: '0.93rem', lineHeight: 1.85, color: 'rgba(255,255,255,0.52)', marginBottom: '1.5rem' }}>
-            Registration follows a deliberate two-step sequence. Schools first submit a non-binding Expression of Interest — this lets us confirm the date works across school calendars and gauge real demand before anything is published. The formal registration form follows once fees and committees are locked.
-          </motion.p>
-          <motion.p variants={fadeUp} style={{ fontFamily: F.body, fontSize: '0.8rem', lineHeight: 1.75, color: 'rgba(255,255,255,0.3)' }}>
-            Open to secondary-school delegations from Buenos Aires Province and the broader region. At least one third of seats are reserved for schools without a standing MUN programme.
-          </motion.p>
-        </Reveal>
 
-        <Reveal>
-          <motion.div variants={fadeUp} style={{ border: '1px solid rgba(255,255,255,0.1)', padding: '2.25rem 2.5rem' }}>
-            <div style={{ marginBottom: '2.25rem' }}>
-              {[
-                { n: '01', t: 'Expression of Interest', d: 'Non-binding. Indicate your school, estimated delegation size, and committee language preferences. Sent before fees or topics are published.' },
-                { n: '02', t: 'Binding Registration',   d: 'Opens once dates, fee, and committees are confirmed. Captures delegation specifics, Code of Conduct acknowledgement, and payment.' },
-                { n: '03', t: 'Confirmation Packet',    d: 'Receive committee assignments, background guides 8 weeks prior, and pre-conference briefing materials for faculty advisors.' },
-              ].map(({ n, t, d }, i) => (
-                <div key={n} style={{
-                  display: 'flex', gap: '1.25rem',
-                  paddingBottom: i < 2 ? '1.75rem' : 0, marginBottom: i < 2 ? '1.75rem' : 0,
-                  borderBottom: i < 2 ? '1px solid rgba(255,255,255,0.06)' : 'none',
-                }}>
-                  <span style={{ fontFamily: F.display, fontSize: '1.3rem', fontWeight: 600, color: 'rgba(253,183,30,0.45)', lineHeight: 1, minWidth: 28 }}>{n}</span>
-                  <div>
-                    <p style={{ fontFamily: F.body, fontWeight: 600, fontSize: '0.81rem', color: C.white, marginBottom: '0.4rem' }}>{t}</p>
-                    <p style={{ fontFamily: F.body, fontSize: '0.75rem', lineHeight: 1.65, color: 'rgba(255,255,255,0.38)' }}>{d}</p>
-                  </div>
-                </div>
-              ))}
+          <motion.div variants={fadeUp} style={{
+            borderLeft: `2px solid ${C.gold}`, paddingLeft: '1.75rem',
+          }}>
+            <div style={{ marginTop: '1rem' }}>
+              <p style={{ fontFamily: F.body, fontSize: '0.78rem', color: 'rgba(255,255,255,0.38)', marginBottom: '2rem', fontStyle: 'italic' }}>
+                Best regards,
+              </p>
+              <p style={{ fontFamily: F.display, fontSize: '1.05rem', fontWeight: 600, color: C.white, marginBottom: '0.15rem' }}>
+                Manav Purswani
+              </p>
+              <p style={{ fontFamily: F.body, fontSize: '0.68rem', color: 'rgba(255,255,255,0.38)', marginBottom: '1.5rem' }}>
+                Founding Secretary-General, LINCOLNMUN
+              </p>
+              <p style={{ fontFamily: F.display, fontSize: '1.05rem', fontWeight: 600, color: C.white, marginBottom: '0.15rem' }}>
+                Cata Gamero
+              </p>
+              <p style={{ fontFamily: F.body, fontSize: '0.68rem', color: 'rgba(255,255,255,0.38)', marginBottom: '1.5rem' }}>
+                Founding Secretary-General, LINCOLNMUN
+              </p>
+              <p style={{ fontFamily: F.body, fontSize: '0.63rem', color: 'rgba(255,255,255,0.22)', letterSpacing: '0.04em' }}>
+                Asociación Escuelas Lincoln, Buenos Aires, Argentina, 2026
+              </p>
             </div>
+          </motion.div>
+
+          <motion.div variants={fadeUp} style={{ marginTop: '3rem', paddingTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+            <p style={{ fontFamily: F.body, fontSize: '0.78rem', color: 'rgba(255,255,255,0.35)', marginBottom: '1.1rem' }}>
+              Questions about registration, committees, or logistics?
+            </p>
             <a
-              href="mailto:munleadership@lincoln.edu.ar?subject=LINCOLNMUN I — Expression of Interest"
+              href="mailto:munleadership@lincoln.edu.ar"
               style={{
-                display: 'block', textAlign: 'center',
+                display: 'inline-block',
                 fontFamily: F.body, fontSize: '0.67rem', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase',
-                background: C.goldLight, color: C.navy, padding: '1.1rem 2rem',
+                background: C.goldLight, color: C.navy, padding: '0.9rem 2rem',
                 textDecoration: 'none', transition: 'background 0.18s',
               }}
               onMouseEnter={e => (e.currentTarget.style.background = '#e8a800')}
               onMouseLeave={e => (e.currentTarget.style.background = C.goldLight)}
             >
-              Submit Expression of Interest
+              Get in touch
             </a>
           </motion.div>
         </Reveal>
@@ -693,7 +767,7 @@ function Contact() {
             <p style={{ fontFamily: F.body, fontSize: '0.57rem', letterSpacing: '0.24em', textTransform: 'uppercase', color: C.goldLight, marginBottom: '1.2rem', fontWeight: 600 }}>
               Quick Links
             </p>
-            {['About', 'Committees', 'Schedule', 'Registration'].map(link => (
+            {['About', 'Committees', 'Schedule', 'Letter'].map(link => (
               <a key={link} href={`#${link.toLowerCase()}`} style={{
                 display: 'block', fontFamily: F.body, fontSize: '0.79rem',
                 color: 'rgba(255,255,255,0.38)', textDecoration: 'none', marginBottom: '0.55rem', transition: 'color 0.2s',
@@ -756,7 +830,7 @@ export default function App() {
       <About />
       <Committees />
       <Schedule />
-      <Registration />
+      <Letter />
       <Contact />
       <Footer />
     </>
