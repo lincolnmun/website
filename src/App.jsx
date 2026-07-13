@@ -34,13 +34,13 @@ const stagger = {
 }
 
 /* ─── Reveal on scroll ──────────────────────────────────────────────────── */
-function Reveal({ children, className = '' }) {
+function Reveal({ children, className = '', style }) {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-72px' })
   return (
     <motion.div ref={ref} variants={stagger}
       initial="hidden" animate={inView ? 'visible' : 'hidden'}
-      className={className}
+      className={className} style={style}
     >
       {children}
     </motion.div>
@@ -213,25 +213,7 @@ function Hero() {
           October 2nd – October 4th 2026 · Vicente López, Buenos Aires
         </motion.p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, delay: 1.45 }}
-          style={{ display: 'inline-flex', border: '1px solid rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)' }}
-        >
-          {[{ v: d, l: 'Days' }, { v: h, l: 'Hours' }, { v: m, l: 'Min' }, { v: s, l: 'Sec' }].map(({ v, l }, i) => (
-            <div key={l} style={{
-              padding: 'clamp(0.9rem, 2vw, 1.3rem) clamp(1.1rem, 2.5vw, 1.75rem)',
-              textAlign: 'center',
-              borderRight: i < 3 ? '1px solid rgba(255,255,255,0.1)' : 'none',
-            }}>
-              <div style={{ fontFamily: F.display, fontSize: 'clamp(1.6rem, 3.5vw, 2.5rem)', fontWeight: 600, color: C.white, lineHeight: 1, letterSpacing: '-0.02em' }}>
-                {String(v).padStart(2, '0')}
-              </div>
-              <div style={{ fontFamily: F.body, fontSize: '0.52rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', marginTop: 5 }}>
-                {l}
-              </div>
-            </div>
-          ))}
-        </motion.div>
+        
 
       </div>
     </section>
@@ -268,7 +250,7 @@ function StatsStrip() {
 function About() {
   return (
     <section id="about" style={{ background: C.offWhite, padding: '7rem 2.5rem' }}>
-      <div className="grid grid-cols-1 md:grid-cols-2" style={{ maxWidth: 1100, margin: '0 auto', gap: '5rem', alignItems: 'start' }}>
+      <div className="grid grid-cols-1 md:grid-cols-2" style={{ maxWidth: 1100, margin: '0 auto', gap: '5rem', alignItems: 'stretch' }}>
 
         <Reveal>
 
@@ -284,29 +266,33 @@ function About() {
           <motion.p variants={fadeUp} style={{ fontFamily: F.body, fontSize: '0.95rem', lineHeight: 1.85, color: '#334155', marginBottom: '2.25rem' }}>
             From the opening ceremony to the closing asado, every element of the conference is run by students. Beyond delegating, students may apply to chair across any of our thirteen committees, presenting a unique opportunity for students to assume leadership roles before committee sessions begin.
           </motion.p>
-          <motion.p variants={fadeUp} style={{ fontFamily: F.body, fontSize: '0.95rem', lineHeight: 1.85, color: '#334155', marginBottom: '2.25rem' }}>
+          <motion.p variants={fadeUp} style={{ fontFamily: F.body, fontSize: '0.95rem', lineHeight: 1.85, color: '#334155', marginBottom: 0 }}>
             LINCOLNMUN welcomes experienced and first-time delegations alike, matching delegates to roles that meet each school where they are. Bilingual by design, two-thirds of our committees run in English and one-third in Spanish, making LINCOLNMUN the most balanced bilingual Model UN conference in Argentina.          </motion.p>
         </Reveal>
 
-        <Reveal>
-          <motion.div variants={fadeUp} style={{ background: C.navy, padding: '2.5rem', marginBottom: '1.25rem' }}>
-            <p style={{ fontFamily: F.body, fontSize: '0.57rem', letterSpacing: '0.24em', textTransform: 'uppercase', color: C.goldLight, marginBottom: '1.75rem', fontWeight: 600 }}>
-              Founding Objectives
-            </p>
-            {[
-              { t: 'Quality',    d: 'Well-prepared chairs, clear rules of procedure, and committees that stay on topic.' },
-              { t: 'Access',     d: 'Affordable registration and local venue so more schools can participate, not just those with travel budgets.' },
-              { t: 'Continuity', d: 'Run it twice, document everything, and hand it off so the next Secretariat can actually use what we built.' },
-              { t: 'Integrity',  d: 'Balanced books, transparent reporting, and no surprises for the school administration.' },
-            ].map(({ t, d }, i) => (
-              <div key={t} style={{ paddingBottom: i < 3 ? '1.5rem' : 0, marginBottom: i < 3 ? '1.5rem' : 0, borderBottom: i < 3 ? '1px solid rgba(255,255,255,0.06)' : 'none' }}>
-                <p style={{ fontFamily: F.display, fontSize: '1.05rem', fontWeight: 600, color: C.white, marginBottom: '0.3rem' }}>{t}</p>
-                <p style={{ fontFamily: F.body, fontSize: '0.77rem', color: 'rgba(255,255,255,0.43)', lineHeight: 1.65 }}>{d}</p>
+        <Reveal style={{ position: 'relative' }}>
+          <motion.div variants={fadeUp} style={{ overflow: 'hidden', position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column' }}>
+            <img src="/classroom.jpg" alt="Delegates in committee session" style={{ display: 'block', width: '100%', flex: 1, minHeight: 0, objectFit: 'cover', objectPosition: 'center 20%' }} />
+            <div style={{ flex: '1 1 0', minHeight: 0, background: C.navy, padding: '0 2.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <p style={{ fontFamily: F.display, fontSize: '2rem', fontWeight: 600, color: C.goldLight, lineHeight: 1.1, letterSpacing: '-0.01em', textAlign: 'center', whiteSpace: 'nowrap', margin: 0 }}>
+              <span style={{ fontStyle: 'italic' }}>For students, by students.</span>
+              </p>
+            </div>
+            <div className="grid grid-cols-2" style={{ flex: '1 1 0', minHeight: 0, background: C.navy, borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', borderRight: '1px solid rgba(255,255,255,0.08)' }}>
+                <div style={{ height: 50, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: F.display, fontSize: '2.1rem', fontWeight: 600, color: C.goldLight, lineHeight: 1 }}>
+                  <sup style={{ fontSize: '2rem' }}>2</sup>&frasl;<sub style={{ fontSize: '2rem' }}>3</sub>
+                </div>
+                <div style={{ fontFamily: F.body, fontSize: '0.85rem', letterSpacing: '0.17em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.33)', marginTop: 6 }}>English Conferences</div>
               </div>
-            ))}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
+                <div style={{ height: 50, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <img src="/hands.svg" alt="Raised hands" style={{ display: 'block', height: 50, width: 'auto' }} />
+                </div>
+                <div style={{ fontFamily: F.body, fontSize: '0.85rem', letterSpacing: '0.17em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.33)', marginTop: 6 }}>Open to All</div>
+              </div>
+            </div>
           </motion.div>
-
-          
         </Reveal>
       </div>
     </section>
