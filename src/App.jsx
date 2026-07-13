@@ -300,20 +300,21 @@ function About() {
 }
 
 /* ─── Committees ─────────────────────────────────────────────────────────── */
+const IMG = id => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=800&q=70`
 const COMMITTEES = [
-  { abbr: 'UNSC',  name: 'Security Council',           lang: 'en', seats: 15, type: 'parliamentary', note: 'Advanced',          room: '4th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC' },
-  { abbr: 'GA',    name: 'General Assembly',            lang: 'en', seats: 50, type: 'parliamentary', note: 'Beginner · Large',   room: 'Auditorium',           chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC' },
-  { abbr: 'ECOSOC',name: 'ECOSOC',                      lang: 'en', seats: 20, type: 'parliamentary', note: 'Intermediate',       room: '4th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC' },
-  { abbr: 'UNHRC', name: 'Human Rights Council',        lang: 'en', seats: 20, type: 'parliamentary', note: 'Intermediate',       room: '4th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC' },
-  { abbr: 'PC',    name: 'Political Committee',         lang: 'en', seats: 20, type: 'parliamentary', note: 'Intermediate',       room: '4th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC' },
-  { abbr: 'ICJ',   name: "Int'l Court of Justice",      lang: 'en', seats: 15, type: 'court',         note: 'Advanced',          room: '4th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC' },
-  { abbr: 'ICC',   name: "Int'l Criminal Court",        lang: 'en', seats: 30, type: 'court',         note: 'Advanced',          room: 'Library',              chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC' },
-  { abbr: 'HICC',  name: 'Historical ICC',              lang: 'en', seats: 30, type: 'court',         note: 'Advanced · Historical', room: 'Aula Magna',        chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC' },
-  { abbr: 'HG',    name: 'The Hunger Games',            lang: 'en', seats: 15, type: 'crisis',        note: 'Advanced · Crisis', room: '4th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC' },
-  { abbr: 'CS',    name: 'Consejo de Seguridad',        lang: 'es', seats: 15, type: 'parliamentary', note: 'Avanzado',          room: '5th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC' },
-  { abbr: 'ECOS',  name: 'ECOSOC en Español',           lang: 'es', seats: 20, type: 'parliamentary', note: 'Intermedio',        room: '5th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC' },
-  { abbr: 'CP',    name: 'Comité Político',             lang: 'es', seats: 20, type: 'parliamentary', note: 'Intermedio',        room: '5th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC' },
-  { abbr: 'CDH',   name: 'Consejo de Derechos Humanos', lang: 'es', seats: 20, type: 'parliamentary', note: 'Intermedio',        room: '5th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC' },
+  { abbr: 'UNSC',  name: 'Security Council',           lang: 'en', seats: 15, type: 'parliamentary', note: 'Advanced',          room: '4th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: IMG('1548630435-998a2cbbff67') },
+  { abbr: 'GA',    name: 'General Assembly',            lang: 'en', seats: 50, type: 'parliamentary', note: 'Beginner · Large',   room: 'Auditorium',           chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: IMG('1714568834394-0407d393e4b7') },
+  { abbr: 'ECOSOC',name: 'ECOSOC',                      lang: 'en', seats: 20, type: 'parliamentary', note: 'Intermediate',       room: '4th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: IMG('1579227114496-27346f474519') },
+  { abbr: 'UNHRC', name: 'Human Rights Council',        lang: 'en', seats: 20, type: 'parliamentary', note: 'Intermediate',       room: '4th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: IMG('1594415156128-af1d8788db6c') },
+  { abbr: 'PC',    name: 'Political Committee',         lang: 'en', seats: 20, type: 'parliamentary', note: 'Intermediate',       room: '4th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: IMG('1782998307726-f93ec14eda24') },
+  { abbr: 'ICJ',   name: "Int'l Court of Justice",      lang: 'en', seats: 15, type: 'court',         note: 'Advanced',          room: '4th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: IMG('1768839719921-6a554fb3e847') },
+  { abbr: 'ICC',   name: "Int'l Criminal Court",        lang: 'en', seats: 30, type: 'court',         note: 'Advanced',          room: 'Library',              chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: IMG('1768839722927-df0ef3188f6d') },
+  { abbr: 'HICC',  name: 'Historical ICC',              lang: 'en', seats: 30, type: 'court',         note: 'Advanced · Historical', room: 'Aula Magna',        chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: IMG('1676181739859-08330dea8999') },
+  { abbr: 'HG',    name: 'The Hunger Games',            lang: 'en', seats: 15, type: 'crisis',        note: 'Advanced · Crisis', room: '4th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: IMG('1643538146589-350d289182e8') },
+  { abbr: 'CS',    name: 'Consejo de Seguridad',        lang: 'es', seats: 15, type: 'parliamentary', note: 'Avanzado',          room: '5th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: IMG('1552912276-dde406237918') },
+  { abbr: 'ECOS',  name: 'ECOSOC en Español',           lang: 'es', seats: 20, type: 'parliamentary', note: 'Intermedio',        room: '5th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: IMG('1556983852-43bf21186b2a') },
+  { abbr: 'CP',    name: 'Comité Político',             lang: 'es', seats: 20, type: 'parliamentary', note: 'Intermedio',        room: '5th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: IMG('1540910419892-4a36d2c3266c') },
+  { abbr: 'CDH',   name: 'Consejo de Derechos Humanos', lang: 'es', seats: 20, type: 'parliamentary', note: 'Intermedio',        room: '5th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: IMG('1511898634545-c01af8a54dd5') },
 ]
 
 const TYPE_TAG = {
@@ -323,48 +324,42 @@ const TYPE_TAG = {
 }
 
 function CommitteeCard({ c, onOpen }) {
-  const tag = TYPE_TAG[c.type]
   return (
     <motion.div
       layout
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
       transition={{ duration: 0.18 }}
       onClick={onOpen}
-      style={{ background: C.white, padding: '1.75rem 2rem', cursor: 'pointer', transition: 'background 0.18s' }}
-      onMouseEnter={e => { e.currentTarget.style.background = C.offWhite }}
-      onMouseLeave={e => { e.currentTarget.style.background = C.white }}
+      style={{
+        position: 'relative', aspectRatio: '1 / 1', cursor: 'pointer',
+        overflow: 'hidden', backgroundColor: C.navyDark,
+      }}
+      onMouseEnter={e => { const img = e.currentTarget.querySelector('img'); if (img) img.style.transform = 'scale(1.06)' }}
+      onMouseLeave={e => { const img = e.currentTarget.querySelector('img'); if (img) img.style.transform = 'scale(1)' }}
     >
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
-        <span style={{ fontFamily: F.body, fontSize: '0.6rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: C.gold, fontWeight: 700 }}>
-          {c.abbr}
-        </span>
-        <span style={{ fontFamily: F.body, fontSize: '0.55rem', letterSpacing: '0.1em', textTransform: 'uppercase', padding: '0.22rem 0.55rem', background: tag.bg, color: tag.fg, fontWeight: 600 }}>
-          {tag.label}
-        </span>
-      </div>
-
-      <h3 style={{ fontFamily: F.display, fontSize: '1.2rem', fontWeight: 600, color: C.navy, lineHeight: 1.25, marginBottom: '0.9rem' }}>
-        {c.name}
-      </h3>
-
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '0.9rem', borderTop: `1px solid ${C.border}` }}>
-        <span style={{ fontFamily: F.body, fontSize: '0.71rem', color: C.muted }}>{c.note}</span>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
-          <span style={{
-            fontFamily: F.body, fontSize: '0.58rem', letterSpacing: '0.08em', padding: '0.2rem 0.5rem', fontWeight: 600,
-            background: c.lang === 'es' ? 'rgba(150,20,40,0.07)' : 'rgba(24,35,100,0.07)',
-            color: c.lang === 'es' ? '#7B1225' : '#1B2F5E',
-          }}>
-            {c.lang === 'es' ? 'Español' : 'English'}
-          </span>
-          <span style={{ fontFamily: F.body, fontSize: '0.71rem', color: C.muted }}>{c.seats}</span>
-        </div>
-      </div>
-
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '0.85rem' }}>
-        <svg width="14" height="14" fill="none" stroke={C.muted} strokeWidth="1.8" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15 12H9m6 0l-3-3m3 3l-3 3" />
-        </svg>
+      <img
+        src={c.img} alt={c.name} loading="lazy"
+        style={{
+          position: 'absolute', inset: 0, width: '100%', height: '100%',
+          objectFit: 'cover', transition: 'transform 0.55s ease',
+        }}
+      />
+      <div style={{
+        position: 'absolute', inset: 0,
+        background: 'linear-gradient(to top, rgba(24,35,67,0.94) 0%, rgba(24,35,67,0.62) 45%, rgba(24,35,67,0.30) 100%)',
+      }} />
+      <div style={{
+        position: 'absolute', inset: 0, display: 'flex', alignItems: 'center',
+        justifyContent: 'center', padding: '1.75rem',
+      }}>
+        <h3 style={{
+          fontFamily: F.display, fontVariant: 'small-caps', color: C.white,
+          textAlign: 'center', fontSize: 'clamp(1.4rem, 2.4vw, 1.9rem)',
+          fontWeight: 600, lineHeight: 1.2, letterSpacing: '0.02em',
+          textShadow: '0 1px 12px rgba(0,0,0,0.35)',
+        }}>
+          {c.name}
+        </h3>
       </div>
     </motion.div>
   )
@@ -502,14 +497,12 @@ function Committees() {
     <section id="committees" style={{ background: C.white, padding: '7rem 2.5rem' }}>
       <div style={{ maxWidth: 1100, margin: '0 auto' }}>
         <Reveal>
-          <Label>Edition I · October 2026</Label>
-          <Rule />
           <div className="flex flex-col md:flex-row md:items-end" style={{ justifyContent: 'space-between', gap: '2rem', marginBottom: '1.5rem' }}>
             <motion.h2 variants={fadeUp} style={{
               fontFamily: F.display, fontWeight: 600, color: C.text,
               fontSize: 'clamp(2.25rem, 4vw, 3.5rem)', lineHeight: 1.08, letterSpacing: '-0.02em',
             }}>
-              13 Committees.<br />Two Languages.
+              Committees
             </motion.h2>
 
             <motion.div variants={fadeUp} style={{ display: 'flex', border: `1px solid ${C.border}` }}>
@@ -532,14 +525,11 @@ function Committees() {
               ))}
             </motion.div>
           </div>
-          <motion.p variants={fadeUp} style={{ fontFamily: F.body, fontSize: '0.72rem', color: C.muted, marginBottom: '2.5rem' }}>
-            Click any card to view room, chairs, topics, and contact details.
-          </motion.p>
         </Reveal>
 
         <motion.div layout
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-          style={{ gap: '1px', background: C.border }}
+          style={{ gap: '1.25rem' }}
         >
           <AnimatePresence>
             {filtered.map((c, i) => {
@@ -570,7 +560,7 @@ function Committees() {
 /* ─── Schedule ───────────────────────────────────────────────────────────── */
 const DAYS = [
   {
-    day: 'Day 1', date: 'Friday, 2 October', label: 'Opening Evening',
+    day: 'Day 1', date: 'Friday, 2 October', label: '',
     sessions: [
       { time: '13:00 – 16:00', activity: 'Setup · Secretariat, Head of Logistics & Tech on site. Rooms dressed; registration prepared.' },
       { time: '16:00',         activity: 'Doors open · Arriving delegations begin registration' },
@@ -580,7 +570,7 @@ const DAYS = [
     ],
   },
   {
-    day: 'Day 2', date: 'Saturday, 3 October', label: 'Full Day',
+    day: 'Day 2', date: 'Saturday, 3 October', label: '',
     sessions: [
       { time: '08:30',         activity: 'Doors open · Refreshments' },
       { time: '09:00 – 11:30', activity: 'Committee Session 2' },
@@ -594,7 +584,7 @@ const DAYS = [
     ],
   },
   {
-    day: 'Day 3', date: 'Sunday, 4 October', label: 'Voting & Closing',
+    day: 'Day 3', date: 'Sunday, 4 October', label: '',
     sessions: [
       { time: '08:30',         activity: 'Doors open · Refreshments' },
       { time: '09:00 – 11:30', activity: 'Committee Session 6' },
@@ -616,8 +606,6 @@ function Schedule() {
     <section id="schedule" style={{ background: C.navyDark, padding: '7rem 2.5rem' }}>
       <div style={{ maxWidth: 860, margin: '0 auto' }}>
         <Reveal>
-          <Label light>2 – 4 October 2026</Label>
-          <Rule light />
           <motion.h2 variants={fadeUp} style={{
             fontFamily: F.display, fontWeight: 600, color: C.white,
             fontSize: 'clamp(2.25rem, 4vw, 3.5rem)', lineHeight: 1.08, letterSpacing: '-0.02em', marginBottom: '3rem',
@@ -635,7 +623,7 @@ function Schedule() {
                 cursor: 'pointer', fontWeight: day === i ? 600 : 400,
                 transition: 'color 0.2s', whiteSpace: 'nowrap', marginBottom: -1,
               }}>
-                {d} · {label}
+                {d}  {label}
               </button>
             ))}
           </motion.div>
@@ -674,8 +662,6 @@ function Letter() {
     <section id="letter" style={{ background: C.navy, padding: '7rem 2.5rem' }}>
       <div style={{ maxWidth: 680, margin: '0 auto' }}>
         <Reveal>
-          <Label light>From the Secretariat</Label>
-          <Rule light />
           <motion.h2 variants={fadeUp} style={{
             fontFamily: F.display, fontWeight: 600, color: C.white,
             fontSize: 'clamp(2rem, 4vw, 3rem)', lineHeight: 1.1, letterSpacing: '-0.02em', marginBottom: '2.5rem',
