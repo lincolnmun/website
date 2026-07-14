@@ -2,30 +2,39 @@ import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { useState, useRef, useEffect } from 'react'
 
 const MOBILE_CSS = `
+  /* ── Global: horizontal padding scales with viewport ── */
+  section {
+    padding-left:  clamp(1.1rem, 3.5vw, 2.5rem) !important;
+    padding-right: clamp(1.1rem, 3.5vw, 2.5rem) !important;
+  }
+
+  /* ── Phone  (< 768px) ── */
   @media (max-width: 767px) {
-    /* Tighter section padding on phones */
-    section { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
-    section[style*="7rem"] { padding-top: 4rem !important; padding-bottom: 4rem !important; }
-    /* About image column — give it explicit height on mobile */
-    .about-image-col { position: relative !important; height: 420px !important; inset: auto !important; }
-    /* CommitteeModal full-screen on phones */
     :root { --orphan-col: auto; }
+    .about-image-col { position: relative !important; height: 380px !important; inset: auto !important; }
     .committee-modal-panel {
       max-width: 100% !important; width: 100% !important;
       max-height: 100dvh !important; height: 100dvh !important;
       padding: 1.5rem 1.25rem 2rem !important;
       border-radius: 0 !important;
     }
-    /* Countdown — smaller numbers on tiny screens */
-    .countdown-unit { padding: 0.75rem 0.85rem !important; }
-    /* StatsStrip — 3 cols, hide last two on very small or wrap cleanly */
+    .countdown-unit { padding: 0.7rem 0.9rem !important; }
     .stats-strip-grid { grid-template-columns: repeat(3, 1fr) !important; }
-    /* Nav mobile menu wider touch targets */
-    .mobile-nav-link { padding: 0.9rem 0 !important; font-size: 1.35rem !important; }
-    /* Letter max-width full on phone */
     #letter > div { max-width: 100% !important; }
-    /* Schedule session rows */
-    .schedule-row { flex-direction: column !important; gap: 0.3rem !important; }
+  }
+
+  /* ── Tablet  (768px – 1199px) ── */
+  @media (min-width: 768px) and (max-width: 1199px) {
+    .stats-strip-grid { grid-template-columns: repeat(5, 1fr) !important; }
+    .committee-modal-panel { max-width: 520px !important; }
+  }
+
+  /* ── Large desktop  (≥ 1920px) ── */
+  @media (min-width: 1920px) {
+    section {
+      padding-left:  clamp(2.5rem, 5vw, 6rem) !important;
+      padding-right: clamp(2.5rem, 5vw, 6rem) !important;
+    }
   }
 `
 
@@ -143,8 +152,8 @@ function Navbar() {
       transition={{ duration: 0.6, delay: 0.2 }}
       style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-        height: 72, display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '0 3.5rem',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        padding: 'clamp(10px, 1.1vw, 22px) clamp(10px, 1.1vw, 22px)',
         background: solid ? C.navy : 'transparent',
         borderBottom: solid ? '1px solid rgba(255,255,255,0.06)' : 'none',
         transition: 'background 0.4s ease, border-color 0.4s ease',
@@ -152,7 +161,7 @@ function Navbar() {
     >
       <a href="#" style={{ display: 'flex', alignItems: 'center', gap: 11, textDecoration: 'none' }}>
         <img src="/logo.png" alt="Escuelas Lincoln" style={{
-          width: 52, height: 52, borderRadius: '50%', objectFit: 'cover',
+          width: 'clamp(36px, 4.3vw, 80px)', height: 'clamp(36px, 4.3vw, 80px)', borderRadius: '50%', objectFit: 'cover',
         }} />
       </a>
 
@@ -262,7 +271,7 @@ function StatsStrip() {
       <div className="stats-strip-grid grid grid-cols-3 md:grid-cols-5" style={{ maxWidth: 1100, margin: '0 auto' }}>
         {items.map(({ v, l }, i) => (
           <div key={l} style={{
-            padding: '5rem 0.75rem', textAlign: 'center',
+            padding: 'clamp(2rem, 5vw, 5rem) 0.75rem', textAlign: 'center',
             borderRight: i < 4 ? '1px solid rgba(255,255,255,0.05)' : 'none',
           }}>
             <div style={{ fontFamily: F.display, fontSize: '2.8rem', fontWeight: 600, color: C.goldLight, lineHeight: 1 }}>{v}</div>
@@ -277,7 +286,7 @@ function StatsStrip() {
 /* ─── About ─────────────────────────────────────────────────────────────── */
 function About() {
   return (
-    <section id="about" style={{ background: C.white, padding: '7rem 2.5rem' }}>
+    <section id="about" style={{ background: C.white, padding: 'clamp(3rem, 7vw, 7rem) clamp(1.1rem, 3.5vw, 2.5rem)' }}>
       <div className="grid grid-cols-1 md:grid-cols-2" style={{ maxWidth: 1100, margin: '0 auto', gap: '5rem', alignItems: 'stretch' }}>
 
         <Reveal>
@@ -531,7 +540,7 @@ function Committees() {
   const handleToggle = (abbr) => setModal(abbr)
 
   return (
-    <section id="committees" style={{ background: C.navy, padding: '7rem 2.5rem' }}>
+    <section id="committees" style={{ background: C.navy, padding: 'clamp(3rem, 7vw, 7rem) clamp(1.1rem, 3.5vw, 2.5rem)' }}>
       <div style={{ maxWidth: 1100, margin: '0 auto' }}>
         <Reveal>
           <div className="flex flex-col md:flex-row md:items-end" style={{ justifyContent: 'space-between', gap: '2rem', marginBottom: '1.5rem' }}>
@@ -672,7 +681,7 @@ function Schedule() {
   const [day, setDay] = useState(0)
 
   return (
-    <section id="schedule" style={{ background: C.navyMid, padding: '7rem 2.5rem' }}>
+    <section id="schedule" style={{ background: C.navyMid, padding: 'clamp(3rem, 7vw, 7rem) clamp(1.1rem, 3.5vw, 2.5rem)' }}>
       <div style={{ maxWidth: 860, margin: '0 auto' }}>
         <Reveal>
           <motion.h2 variants={fadeUp} style={{
@@ -728,7 +737,7 @@ function Schedule() {
 /* ─── Letter ─────────────────────────────────────────────────────────────── */
 function Letter() {
   return (
-    <section id="letter" style={{ background: C.offWhite, padding: '7rem 2.5rem' }}>
+    <section id="letter" style={{ background: C.offWhite, padding: 'clamp(3rem, 7vw, 7rem) clamp(1.1rem, 3.5vw, 2.5rem)' }}>
       <div style={{ maxWidth: 680, margin: '0 auto' }}>
         <Reveal>
           <motion.h2 variants={fadeUp} style={{
@@ -772,7 +781,7 @@ function Letter() {
 /* ─── Contact ────────────────────────────────────────────────────────────── */
 function Contact() {
   return (
-    <section id="contact" style={{ background: C.navyDark, padding: '5rem 2.5rem', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+    <section id="contact" style={{ background: C.navyDark, padding: 'clamp(2.5rem, 5vw, 5rem) clamp(1.1rem, 3.5vw, 2.5rem)', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
       <Reveal>
         <div className="grid grid-cols-1 md:grid-cols-3" style={{ maxWidth: 1100, margin: '0 auto', gap: '3.5rem' }}>
 
