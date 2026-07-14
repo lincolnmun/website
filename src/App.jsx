@@ -376,6 +376,10 @@ function Navbar() {
         <LangToggle />
       </div>
 
+      <div className="md:hidden" style={{ display: 'flex', alignItems: 'center', marginRight: 4 }}>
+        <LangToggle />
+      </div>
+
       <button className="md:hidden" onClick={() => setOpen(!open)} style={{
         background: 'none', border: 'none', color: C.white, cursor: 'pointer', padding: 4,
       }} aria-label="Toggle menu">
@@ -406,7 +410,6 @@ function Navbar() {
                 {label}
               </a>
             ))}
-            <LangToggle inDrawer />
           </motion.div>
         )}
       </AnimatePresence>
