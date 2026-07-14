@@ -1,5 +1,186 @@
 import { motion, useInView, AnimatePresence } from 'framer-motion'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, createContext, useContext } from 'react'
+
+/* ─── i18n ───────────────────────────────────────────────────────────────── */
+const LangCtx = createContext({ lang: 'en', setLang: () => {} })
+const useLang = () => useContext(LangCtx)
+const useT   = () => { const { lang } = useLang(); return T[lang] }
+
+const T = {
+  en: {
+    nav: [
+      { label: 'About',      href: '#about' },
+      { label: 'Committees', href: '#committees' },
+      { label: 'Schedule',   href: '#schedule' },
+      { label: 'Letter',     href: '#letter' },
+    ],
+    hero: { date: 'October 2nd – October 4th 2026 · Vicente López, Buenos Aires' },
+    stats: ['Committees', 'Delegate Seats', 'Chairs', 'Conference Days', 'Languages'],
+    about: {
+      heading: ['What is', 'LINCOLNMUN?'],
+      p1: 'LINCOLNMUN is a three-day Model UN conference founded for secondary school students by secondary school students in the Buenos Aires region. Delegates step into the roles of UN representatives, historical figures, and influential persons to address key global challenges while building skills in leadership and public speaking.',
+      p2: 'From the opening ceremony to the closing asado, every element of the conference is run by students. Beyond delegating, students may apply to chair across any of our thirteen committees, presenting a unique opportunity for students to assume leadership roles before committee sessions begin.',
+      p3: 'LINCOLNMUN welcomes experienced and first-time delegations alike, matching delegates to roles that meet each school where they are. Bilingual by design, two-thirds of our committees run in English and one-third in Spanish, making LINCOLNMUN the most balanced bilingual Model UN conference in Argentina.',
+      tagline: 'For students, by students.',
+      stat1: 'English Conferences',
+      stat2: 'Open to All',
+    },
+    committees: {
+      heading: 'Committees',
+      filters: [{ key: 'en', label: 'English' }, { key: 'es', label: 'Spanish' }],
+      hint: 'Click any card to view room, chairs, topics, and contact details.',
+      types: { parliamentary: 'Parliamentary', court: 'Court Procedure', crisis: 'Crisis' },
+      modal: { room: 'Room', seats: 'delegates', language: 'Language', level: 'Level', chairs: 'Chairs', contact: 'Chair Contact', topics: 'Topics' },
+      notes: { 'Advanced': 'Advanced', 'Intermediate': 'Intermediate', 'Beginner': 'Beginner', 'Beginner · Large': 'Beginner · Large', 'Advanced · Historical': 'Advanced · Historical', 'Advanced · Crisis': 'Advanced · Crisis', 'Avanzado': 'Advanced', 'Intermedio': 'Intermediate' },
+    },
+    schedule: {
+      heading: 'Conference Schedule',
+      days: [
+        { day: 'Day 1', date: 'Friday, 2 October', sessions: [
+          { time: '4:00 PM',           activity: 'Reception  ·  Lobby' },
+          { time: '4:30 PM – 5:30 PM', activity: 'Opening Ceremony  ·  Auditorium' },
+          { time: '5:30 PM – 7:00 PM', activity: 'Committee Session 1' },
+          { time: '7:00 PM',           activity: 'Dais and Secretariat debrief  ·  Mansion' },
+        ]},
+        { day: 'Day 2', date: 'Saturday, 3 October', sessions: [
+          { time: '08:30',         activity: 'Reception · Lobby' },
+          { time: '09:00 – 11:30', activity: 'Committee Session 2' },
+          { time: '11:30 – 11:45', activity: 'Break' },
+          { time: '11:45 – 13:00', activity: 'Committee Session 3' },
+          { time: '13:00 – 14:30', activity: 'Lunch  ·  Gym / Cafeteria / Library' },
+          { time: '14:30 – 17:00', activity: 'Committee Session 4' },
+          { time: '17:00 – 17:15', activity: 'Break' },
+          { time: '17:15 – 19:00', activity: 'Committee Session 5' },
+          { time: '19:00',         activity: 'Dais and Secretariat debrief  ·  Mansion' },
+        ]},
+        { day: 'Day 3', date: 'Sunday, 4 October', sessions: [
+          { time: '08:30',         activity: 'Reception · Lobby' },
+          { time: '09:00 – 11:30', activity: 'Committee Session 6' },
+          { time: '11:30 – 11:45', activity: 'Break' },
+          { time: '11:45 – 13:00', activity: 'Committee Session 7' },
+          { time: '13:00 – 14:30', activity: 'Lunch  ·  Gym / Cafeteria / Library' },
+          { time: '14:30 – 15:30', activity: 'Committee Session 8' },
+          { time: '15:30 – 17:00', activity: 'Closing Ceremony  ·  Auditorium' },
+          { time: '17:00 – 19:00', activity: 'Asado & Social Lunch  ·  Middle School Field' },
+          { time: '19:00',         activity: 'Conference Closure' },
+        ]},
+      ],
+    },
+    letter: {
+      heading: ['A letter from the', 'Secretaries-General'],
+      salutation: 'Honorable Chairs, Esteemed Delegates, and Fellow Guests,',
+      body: [
+        'Most schools in Buenos Aires don\'t have reliable access to Model UN. Not on a yearly schedule you can actually plan around, not without depending on whichever teacher happens to run one that year. That gap is the entire reason LINCOLNMUN exists.',
+        'We split the work roughly down the middle. One of us has spent this year buried in committee topics, procedure, and a 250-page handbook most delegates will only ever skim. The other has spent it calling schools that had never heard of Lincoln\'s conference and asking them to send students anyway, with nothing to point to yet except a plan. Neither job was the easy one.',
+        'If the conference feels effortless once you\'re actually in the room, that\'s not an accident. It\'s the two of us spending a year making sure you never have to think about the parts that don\'t work.',
+        'What LINCOLNMUN becomes from here, whether the schools that gave us a first chance decide to come back, gets settled in your committee room this October. Not in anything we write here.',
+        'See you there.',
+      ],
+      closing: 'Best regards,',
+      titles: ['Founding Secretary-General, LINCOLNMUN', 'Founding Secretary-General, LINCOLNMUN'],
+    },
+    footer: {
+      desc: 'A student-run Model United Nations conference. Asociación Escuelas Lincoln, Buenos Aires.',
+      links: 'Quick Links',
+      edition: 'Edition I',
+      facts: [
+        { label: 'Dates',      value: '2 – 4 October 2026' },
+        { label: 'Location',   value: 'La Lucila, Buenos Aires' },
+        { label: 'Committees', value: '13 · English & Spanish' },
+        { label: 'Delegates',  value: 'Up to 300' },
+      ],
+      connect: 'Connect',
+      copyright: 'La Lucila · Buenos Aires Province · Argentina',
+    },
+  },
+
+  es: {
+    nav: [
+      { label: 'Sobre Nosotros', href: '#about' },
+      { label: 'Comités',        href: '#committees' },
+      { label: 'Programa',       href: '#schedule' },
+      { label: 'Carta',          href: '#letter' },
+    ],
+    hero: { date: '2 al 4 de octubre de 2026 · Vicente López, Buenos Aires' },
+    stats: ['Comités', 'Lugares para Delegados', 'Presidentes', 'Días de Conferencia', 'Idiomas'],
+    about: {
+      heading: ['¿Qué es', 'LINCOLNMUN?'],
+      p1: 'LINCOLNMUN es una conferencia de Modelo de Naciones Unidas de tres días, fundada por y para estudiantes secundarios de la región de Buenos Aires. Los delegados asumen los roles de representantes de la ONU, figuras históricas y personas influyentes para abordar desafíos globales mientras desarrollan habilidades de liderazgo y oratoria.',
+      p2: 'Desde la ceremonia de apertura hasta el asado de cierre, cada elemento de la conferencia está a cargo de estudiantes. Además de delegar, los estudiantes pueden postularse para presidir alguno de nuestros trece comités, una oportunidad única de asumir roles de liderazgo antes de que comiencen las sesiones.',
+      p3: 'LINCOLNMUN da la bienvenida tanto a delegaciones con experiencia como a las que participan por primera vez, asignando a los delegados roles acordes al nivel de cada escuela. Bilingüe por diseño, dos tercios de nuestros comités se desarrollan en inglés y un tercio en español, lo que hace de LINCOLNMUN la conferencia de MUN bilingüe más equilibrada de Argentina.',
+      tagline: 'De estudiantes, para estudiantes.',
+      stat1: 'Conferencias en Inglés',
+      stat2: 'Abierto a Todos',
+    },
+    committees: {
+      heading: 'Comités',
+      filters: [{ key: 'en', label: 'Inglés' }, { key: 'es', label: 'Español' }],
+      hint: 'Hacé clic en cualquier tarjeta para ver la sala, los presidentes, los temas y los datos de contacto.',
+      types: { parliamentary: 'Parlamentario', court: 'Proc. de Corte', crisis: 'Crisis' },
+      modal: { room: 'Sala', seats: 'delegados', language: 'Idioma', level: 'Nivel', chairs: 'Presidentes', contact: 'Contacto de Presidentes', topics: 'Temas' },
+      notes: { 'Advanced': 'Avanzado', 'Intermediate': 'Intermedio', 'Beginner': 'Principiante', 'Beginner · Large': 'Principiante · Grande', 'Advanced · Historical': 'Avanzado · Histórico', 'Advanced · Crisis': 'Avanzado · Crisis', 'Avanzado': 'Avanzado', 'Intermedio': 'Intermedio' },
+    },
+    schedule: {
+      heading: 'Programa de la Conferencia',
+      days: [
+        { day: 'Día 1', date: 'Viernes, 2 de octubre', sessions: [
+          { time: '4:00 PM',           activity: 'Recepción  ·  Lobby' },
+          { time: '4:30 PM – 5:30 PM', activity: 'Ceremonia de Apertura  ·  Auditorio' },
+          { time: '5:30 PM – 7:00 PM', activity: 'Sesión de Comité 1' },
+          { time: '7:00 PM',           activity: 'Reunión de la Mesa y el Secretariado  ·  Mansión' },
+        ]},
+        { day: 'Día 2', date: 'Sábado, 3 de octubre', sessions: [
+          { time: '08:30',         activity: 'Recepción · Lobby' },
+          { time: '09:00 – 11:30', activity: 'Sesión de Comité 2' },
+          { time: '11:30 – 11:45', activity: 'Descanso' },
+          { time: '11:45 – 13:00', activity: 'Sesión de Comité 3' },
+          { time: '13:00 – 14:30', activity: 'Almuerzo  ·  Gimnasio / Cafetería / Biblioteca' },
+          { time: '14:30 – 17:00', activity: 'Sesión de Comité 4' },
+          { time: '17:00 – 17:15', activity: 'Descanso' },
+          { time: '17:15 – 19:00', activity: 'Sesión de Comité 5' },
+          { time: '19:00',         activity: 'Reunión de la Mesa y el Secretariado  ·  Mansión' },
+        ]},
+        { day: 'Día 3', date: 'Domingo, 4 de octubre', sessions: [
+          { time: '08:30',         activity: 'Recepción · Lobby' },
+          { time: '09:00 – 11:30', activity: 'Sesión de Comité 6' },
+          { time: '11:30 – 11:45', activity: 'Descanso' },
+          { time: '11:45 – 13:00', activity: 'Sesión de Comité 7' },
+          { time: '13:00 – 14:30', activity: 'Almuerzo  ·  Gimnasio / Cafetería / Biblioteca' },
+          { time: '14:30 – 15:30', activity: 'Sesión de Comité 8' },
+          { time: '15:30 – 17:00', activity: 'Ceremonia de Cierre  ·  Auditorio' },
+          { time: '17:00 – 19:00', activity: 'Asado y Almuerzo Social  ·  Campo de Middle School' },
+          { time: '19:00',         activity: 'Cierre de la Conferencia' },
+        ]},
+      ],
+    },
+    letter: {
+      heading: ['Una carta de los', 'Secretarios Generales'],
+      salutation: 'Honorables Presidentes, Estimados Delegados y Queridos Invitados,',
+      body: [
+        'La mayoría de los colegios de Buenos Aires no tienen acceso confiable a Modelo de Naciones Unidas. No con un calendario anual en el que realmente se pueda planificar, no sin depender de cualquier docente que decida organizarlo ese año. Esa brecha es exactamente la razón por la que existe LINCOLNMUN.',
+        'Dividimos el trabajo más o menos a la mitad. Uno de nosotros pasó este año inmerso en temas de comité, procedimientos y un manual de 250 páginas que la mayoría de los delegados apenas hojearán. El otro lo pasó llamando a colegios que nunca habían escuchado hablar de la conferencia de Lincoln y pidiéndoles que enviaran estudiantes de todas formas, sin nada concreto que mostrar excepto un plan. Ninguno de los dos tuvo la parte fácil.',
+        'Si la conferencia parece sin esfuerzo una vez que estás en la sala, no es casualidad. Es el resultado de que ambos pasamos un año asegurándonos de que nunca tengas que pensar en las partes que no funcionan.',
+        'Lo que se convierta LINCOLNMUN a partir de acá, si los colegios que nos dieron una primera oportunidad deciden volver, se define en tu sala de comité este octubre. No en nada de lo que escribamos acá.',
+        'Nos vemos ahí.',
+      ],
+      closing: 'Atentamente,',
+      titles: ['Secretario General Fundador, LINCOLNMUN', 'Secretaria General Fundadora, LINCOLNMUN'],
+    },
+    footer: {
+      desc: 'Una conferencia de Modelo de Naciones Unidas dirigida por estudiantes. Asociación Escuelas Lincoln, Buenos Aires.',
+      links: 'Enlaces Rápidos',
+      edition: 'Edición I',
+      facts: [
+        { label: 'Fechas',     value: '2 al 4 de octubre de 2026' },
+        { label: 'Lugar',      value: 'La Lucila, Buenos Aires' },
+        { label: 'Comités',    value: '13 · Inglés y Español' },
+        { label: 'Delegados',  value: 'Hasta 300' },
+      ],
+      connect: 'Contacto',
+      copyright: 'La Lucila · Provincia de Buenos Aires · Argentina',
+    },
+  },
+}
 
 const MOBILE_CSS = `
   /* ── Global: horizontal padding scales with viewport ── */
@@ -128,22 +309,36 @@ function useCountdown(isoTarget) {
 }
 
 /* ─── Navbar ────────────────────────────────────────────────────────────── */
-const NAV = [
-  { label: 'About',      href: '#about' },
-  { label: 'Letter',     href: '#letter' },
-  { label: 'Committees', href: '#committees' },
-  { label: 'Schedule',   href: '#schedule' },
-]
-
 function Navbar() {
   const [solid, setSolid] = useState(false)
-  const [open, setOpen] = useState(false)
+  const [open, setOpen]   = useState(false)
+  const { lang, setLang } = useLang()
+  const tx = useT()
 
   useEffect(() => {
     const fn = () => setSolid(window.scrollY > 40)
     window.addEventListener('scroll', fn, { passive: true })
     return () => window.removeEventListener('scroll', fn)
   }, [])
+
+  const LangToggle = ({ inDrawer }) => (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 2, ...(inDrawer ? { padding: '0.9rem 2.75rem', borderTop: '1px solid rgba(255,255,255,0.04)' } : {}) }}>
+      {['en', 'es'].map((l, i) => (
+        <span key={l} style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          {i === 1 && <span style={{ color: 'rgba(255,255,255,0.2)', fontSize: '0.6rem', margin: '0 4px' }}>|</span>}
+          <button onClick={() => setLang(l)} style={{
+            background: 'none', border: 'none', cursor: 'pointer', padding: '2px 0',
+            fontFamily: F.body, fontSize: '0.65rem', letterSpacing: '0.14em',
+            fontWeight: lang === l ? 700 : 400,
+            color: lang === l ? C.white : 'rgba(255,255,255,0.35)',
+            transition: 'color 0.2s',
+          }}>
+            {l.toUpperCase()}
+          </button>
+        </span>
+      ))}
+    </div>
+  )
 
   return (
     <motion.nav
@@ -166,8 +361,8 @@ function Navbar() {
       </a>
 
       <div className="hidden md:flex" style={{ alignItems: 'center', gap: 34 }}>
-        {NAV.map(({ label, href }) => (
-          <a key={label} href={href} style={{
+        {tx.nav.map(({ label, href }) => (
+          <a key={href} href={href} style={{
             fontFamily: F.body, fontSize: '0.68rem', letterSpacing: '0.16em',
             textTransform: 'uppercase', color: 'rgba(255,255,255,0.65)',
             textDecoration: 'none', transition: 'color 0.2s',
@@ -178,6 +373,7 @@ function Navbar() {
             {label}
           </a>
         ))}
+        <LangToggle />
       </div>
 
       <button className="md:hidden" onClick={() => setOpen(!open)} style={{
@@ -195,13 +391,13 @@ function Navbar() {
           <motion.div
             initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}
             style={{
-              position: 'absolute', top: 66, left: 0, right: 0,
+              position: 'absolute', top: '100%', left: 0, right: 0,
               background: C.navy, overflow: 'hidden',
               borderTop: '1px solid rgba(255,255,255,0.06)',
             }}
           >
-            {NAV.map(({ label, href }) => (
-              <a key={label} href={href} onClick={() => setOpen(false)} style={{
+            {tx.nav.map(({ label, href }) => (
+              <a key={href} href={href} onClick={() => setOpen(false)} style={{
                 display: 'block', fontFamily: F.body, fontSize: '0.72rem',
                 letterSpacing: '0.16em', textTransform: 'uppercase',
                 color: 'rgba(255,255,255,0.7)', padding: '1rem 2.75rem',
@@ -210,6 +406,7 @@ function Navbar() {
                 {label}
               </a>
             ))}
+            <LangToggle inDrawer />
           </motion.div>
         )}
       </AnimatePresence>
@@ -219,7 +416,8 @@ function Navbar() {
 
 /* ─── Hero ──────────────────────────────────────────────────────────────── */
 function Hero() {
-  const { d, h, m, s } = useCountdown('2026-10-02T16:00:00-03:00')
+  useCountdown('2026-10-02T16:00:00-03:00')
+  const tx = useT()
 
   return (
     <section style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
@@ -247,7 +445,7 @@ function Hero() {
           initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 1.28 }}
           style={{ fontFamily: F.display, fontSize: 'clamp(0.875rem, 1.5vw, 1rem)', color: 'rgba(255,255,255,0.7)', marginBottom: '2rem' }}
         >
-          October 2nd – October 4th 2026 · Vicente López, Buenos Aires
+          {tx.hero.date}
         </motion.p>
 
         
@@ -259,13 +457,9 @@ function Hero() {
 
 /* ─── Stats strip ────────────────────────────────────────────────────────── */
 function StatsStrip() {
-  const items = [
-    { v: '13', l: 'Committees' },
-    { v: '300', l: 'Delegate Seats' },
-    { v: '26',  l: 'Chairs' },
-    { v: '3',   l: 'Conference Days' },
-    { v: '2',   l: 'Languages' },
-  ]
+  const tx = useT()
+  const vals = ['13', '300', '26', '3', '2']
+  const items = vals.map((v, i) => ({ v, l: tx.stats[i] }))
   return (
     <div style={{ background: C.navy, borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
       <div className="stats-strip-grid grid grid-cols-3 md:grid-cols-5" style={{ maxWidth: 1100, margin: '0 auto' }}>
@@ -285,6 +479,7 @@ function StatsStrip() {
 
 /* ─── About ─────────────────────────────────────────────────────────────── */
 function About() {
+  const { about: ab } = useT()
   return (
     <section id="about" style={{ background: C.white, padding: 'clamp(3rem, 7vw, 7rem) clamp(1.1rem, 3.5vw, 2.5rem)' }}>
       <div className="grid grid-cols-1 md:grid-cols-2" style={{ maxWidth: 1100, margin: '0 auto', gap: '5rem', alignItems: 'stretch' }}>
@@ -296,15 +491,11 @@ function About() {
             fontSize: 'clamp(2.4rem, 4vw, 3.75rem)', lineHeight: 1.08,
             letterSpacing: '-0.02em', marginBottom: '2rem',
           }}>
-            What is<br />LINCOLNMUN?
+            {ab.heading[0]}<br />{ab.heading[1]}
           </motion.h2>
-          <motion.p variants={fadeUp} style={{ fontFamily: F.body, fontSize: '0.95rem', lineHeight: 1.85, color: '#334155', marginBottom: '1.35rem' }}>
-            LINCOLNMUN is a three-day Model UN conference founded for secondary school students by secondary school students in the Buenos Aires region. Delegates step into the roles of UN representatives, historical figures, and influential persons to address key global challenges while building skills in leadership and public speaking.          </motion.p>
-          <motion.p variants={fadeUp} style={{ fontFamily: F.body, fontSize: '0.95rem', lineHeight: 1.85, color: '#334155', marginBottom: '2.25rem' }}>
-            From the opening ceremony to the closing asado, every element of the conference is run by students. Beyond delegating, students may apply to chair across any of our thirteen committees, presenting a unique opportunity for students to assume leadership roles before committee sessions begin.
-          </motion.p>
-          <motion.p variants={fadeUp} style={{ fontFamily: F.body, fontSize: '0.95rem', lineHeight: 1.85, color: '#334155', marginBottom: 0 }}>
-            LINCOLNMUN welcomes experienced and first-time delegations alike, matching delegates to roles that meet each school where they are. Bilingual by design, two-thirds of our committees run in English and one-third in Spanish, making LINCOLNMUN the most balanced bilingual Model UN conference in Argentina.          </motion.p>
+          <motion.p variants={fadeUp} style={{ fontFamily: F.body, fontSize: '0.95rem', lineHeight: 1.85, color: '#334155', marginBottom: '1.35rem' }}>{ab.p1}</motion.p>
+          <motion.p variants={fadeUp} style={{ fontFamily: F.body, fontSize: '0.95rem', lineHeight: 1.85, color: '#334155', marginBottom: '2.25rem' }}>{ab.p2}</motion.p>
+          <motion.p variants={fadeUp} style={{ fontFamily: F.body, fontSize: '0.95rem', lineHeight: 1.85, color: '#334155', marginBottom: 0 }}>{ab.p3}</motion.p>
         </Reveal>
 
         <Reveal style={{ position: 'relative' }}>
@@ -312,7 +503,7 @@ function About() {
             <img src="/classroom.jpg" alt="Delegates in committee session" style={{ display: 'block', width: '100%', flex: 1, minHeight: 0, objectFit: 'cover', objectPosition: 'center 20%' }} />
             <div style={{ flex: '1 1 0', minHeight: 0, background: C.navy, padding: '0 2.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <p style={{ fontFamily: F.display, fontSize: '2rem', fontWeight: 600, color: C.goldLight, lineHeight: 1.1, letterSpacing: '-0.01em', textAlign: 'center', whiteSpace: 'nowrap', margin: 0 }}>
-              <span style={{ fontStyle: 'italic' }}>For students, by students.</span>
+              <span style={{ fontStyle: 'italic' }}>{ab.tagline}</span>
               </p>
             </div>
             <div className="grid grid-cols-2" style={{ flex: '1 1 0', minHeight: 0, background: C.navy, borderTop: '1px solid rgba(255,255,255,0.08)' }}>
@@ -320,13 +511,13 @@ function About() {
                 <div style={{ height: 50, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: F.display, fontSize: '2.1rem', fontWeight: 600, color: C.goldLight, lineHeight: 1 }}>
                   <sup style={{ fontSize: '2rem' }}>2</sup>&frasl;<sub style={{ fontSize: '2rem' }}>3</sub>
                 </div>
-                <div style={{ fontFamily: F.body, fontSize: '0.85rem', letterSpacing: '0.17em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.33)', marginTop: 6 }}>English Conferences</div>
+                <div style={{ fontFamily: F.body, fontSize: '0.85rem', letterSpacing: '0.17em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.33)', marginTop: 6 }}>{ab.stat1}</div>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
                 <div style={{ height: 50, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <img src="/hands.svg" alt="Raised hands" style={{ display: 'block', height: 50, width: 'auto' }} />
                 </div>
-                <div style={{ fontFamily: F.body, fontSize: '0.85rem', letterSpacing: '0.17em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.33)', marginTop: 6 }}>Open to All</div>
+                <div style={{ fontFamily: F.body, fontSize: '0.85rem', letterSpacing: '0.17em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.33)', marginTop: 6 }}>{ab.stat2}</div>
               </div>
             </div>
           </motion.div>
@@ -405,6 +596,7 @@ function CommitteeCard({ c, onOpen }) {
 function CommitteeModal({ c, onClose }) {
   const isTBC = v => v === 'TBC'
   const tag = TYPE_TAG[c.type]
+  const tx = useT()
 
   const handleKey = (e) => { if (e.key === 'Escape') onClose() }
   const ref = useRef(null)
@@ -463,7 +655,7 @@ function CommitteeModal({ c, onClose }) {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8 }}>
             <span style={{ fontFamily: F.body, fontSize: '0.55rem', letterSpacing: '0.1em', textTransform: 'uppercase', padding: '0.22rem 0.55rem', background: tag.bg, color: tag.fg, fontWeight: 600 }}>
-              {tag.label}
+              {tx.committees.types[c.type]}
             </span>
             
           </div>
@@ -472,8 +664,8 @@ function CommitteeModal({ c, onClose }) {
         {/* Room & Seats */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem', marginBottom: '0.85rem' }}>
           {[
-            { label: 'Room', value: c.room },
-            { label: 'Seats', value: `${c.seats} delegates` },
+            { label: tx.committees.modal.room, value: c.room },
+            { label: tx.committees.modal.seats, value: `${c.seats} ${tx.committees.modal.seats}` },
           ].map(({ label, value }) => (
             <div key={label} style={{ background: C.offWhite, padding: '0.7rem 0.9rem' }}>
               <p style={{ fontFamily: F.body, fontSize: '0.5rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: C.muted, marginBottom: '0.25rem' }}>{label}</p>
@@ -485,8 +677,8 @@ function CommitteeModal({ c, onClose }) {
         {/* Lang & Note */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem', marginBottom: '0.85rem' }}>
           {[
-            { label: 'Language', value: c.lang === 'es' ? 'Español' : 'English' },
-            { label: 'Level', value: c.note },
+            { label: tx.committees.modal.language, value: c.lang === 'es' ? 'Español' : 'English' },
+            { label: tx.committees.modal.level, value: tx.committees.notes[c.note] || c.note },
           ].map(({ label, value }) => (
             <div key={label} style={{ background: C.offWhite, padding: '0.7rem 0.9rem' }}>
               <p style={{ fontFamily: F.body, fontSize: '0.5rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: C.muted, marginBottom: '0.25rem' }}>{label}</p>
@@ -534,6 +726,7 @@ function CommitteeModal({ c, onClose }) {
 function Committees() {
   const [active, setActive] = useState('en')
   const [modal, setModal] = useState(null)
+  const tx = useT()
   const filtered = active ? COMMITTEES.filter(c => c.lang === active) : COMMITTEES
 
   const toggleLang = (key) => setActive(prev => prev === key ? null : key)
@@ -548,14 +741,11 @@ function Committees() {
               fontFamily: F.display, fontWeight: 600, color: C.white,
               fontSize: 'clamp(2.25rem, 4vw, 3.5rem)', lineHeight: 1.08, letterSpacing: '-0.02em',
             }}>
-              Committees
+              {tx.committees.heading}
             </motion.h2>
 
             <motion.div variants={fadeUp} style={{ display: 'flex', gap: '0.25rem' }}>
-              {[
-                { key: 'en', label: 'English' },
-                { key: 'es', label: 'Spanish' },
-              ].map(({ key, label }) => {
+              {tx.committees.filters.map(({ key, label }) => {
                 const on = active === key
                 return (
                   <button key={key} onClick={() => toggleLang(key)} aria-pressed={on} style={{
@@ -636,49 +826,10 @@ function Countdown() {
   )
 }
 
-/* ─── Schedule ───────────────────────────────────────────────────────────── */
-const DAYS = [
-  {
-    day: 'Day 1', date: 'Friday, 2 October', label: '',
-    sessions: [
-      { time: '4:00 PM',         activity: 'Reception  ·  Lobby' },
-      { time: '4:30 PM – 5:30 PM', activity: 'Opening Ceremony  ·  Auditorium' },
-      { time: '5:30 PM – 7:00 PM', activity: 'Committee Session 1' },
-      { time: '7:00 PM',         activity: 'Dais and Secretariat debrief   ·  Mansion' },
-    ],
-  },
-  {
-    day: 'Day 2', date: 'Saturday, 3 October', label: '',
-    sessions: [
-      { time: '08:30',         activity: 'Reception · Lobby' },
-      { time: '09:00 – 11:30', activity: 'Committee Session 2' },
-      { time: '11:30 – 11:45', activity: 'Break' },
-      { time: '11:45 – 13:00', activity: 'Committee Session 3' },
-      { time: '13:00 – 14:30', activity: 'Lunch  ·  Gym/Cafeteria/Library' },
-      { time: '14:30 – 17:00', activity: 'Committee Session 4' },
-      { time: '17:00 – 17:15', activity: 'Break' },
-      { time: '17:15 – 19:00', activity: 'Committee Session 5' },
-      { time: '19:00',         activity: 'Dais and Secretariat debrief   ·  Mansion' },
-    ],
-  },
-  {
-    day: 'Day 3', date: 'Sunday, 4 October', label: '',
-    sessions: [
-      { time: '08:30',         activity: 'Reception · Lobby' },
-      { time: '09:00 – 11:30', activity: 'Committee Session 6' },
-      { time: '11:30 – 11:45', activity: 'Break' },
-      { time: '11:45 – 13:00', activity: 'Committee Session 7' },
-      { time: '13:00 – 14:30', activity: 'Lunch  ·  Gym/Cafeteria/Library' },
-      { time: '14:30 – 15:30', activity: 'Committee Session 8' },
-      { time: '15:30 – 17:00', activity: 'Closing Ceremony  ·  Auditorium' },
-      { time: '17:00 – 19:00', activity: 'Asado & social Lunch  ·  Middle School Field' },
-      { time: '19:00',         activity: 'Conference Closure' },
-    ],
-  },
-]
-
 function Schedule() {
   const [day, setDay] = useState(0)
+  const tx = useT()
+  const days = tx.schedule.days
 
   return (
     <section id="schedule" style={{ background: C.navyMid, padding: 'clamp(3rem, 7vw, 7rem) clamp(1.1rem, 3.5vw, 2.5rem)' }}>
@@ -688,11 +839,11 @@ function Schedule() {
             fontFamily: F.display, fontWeight: 600, color: C.white,
             fontSize: 'clamp(2.25rem, 4vw, 3.5rem)', lineHeight: 1.08, letterSpacing: '-0.02em', marginBottom: '3rem',
           }}>
-            Conference Schedule
+            {tx.schedule.heading}
           </motion.h2>
 
           <motion.div variants={fadeUp} style={{ display: 'flex', borderBottom: '1px solid rgba(255,255,255,0.08)', marginBottom: '2.75rem', overflowX: 'auto' }}>
-            {DAYS.map(({ day: d, label }, i) => (
+            {days.map(({ day: d, label }, i) => (
               <button key={d} onClick={() => setDay(i)} style={{
                 fontFamily: F.body, fontSize: '0.63rem', letterSpacing: '0.12em', textTransform: 'uppercase',
                 padding: '0.85rem 1.4rem', background: 'none', border: 'none',
@@ -713,9 +864,9 @@ function Schedule() {
             transition={{ duration: 0.26 }}
           >
             <p style={{ fontFamily: F.body, fontSize: '0.58rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.26)', marginBottom: '1.5rem' }}>
-              {DAYS[day].date}
+              {days[day].date}
             </p>
-            {DAYS[day].sessions.map(({ time, activity }, i) => (
+            {days[day].sessions.map(({ time, activity }, i) => (
               <motion.div key={i}
                 initial={{ opacity: 0, x: -6 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}
                 style={{
@@ -736,6 +887,7 @@ function Schedule() {
 
 /* ─── Letter ─────────────────────────────────────────────────────────────── */
 function Letter() {
+  const { letter: lt } = useT()
   return (
     <section id="letter" style={{ background: C.offWhite, padding: 'clamp(3rem, 7vw, 7rem) clamp(1.1rem, 3.5vw, 2.5rem)' }}>
       <div style={{ maxWidth: 680, margin: '0 auto' }}>
@@ -744,27 +896,33 @@ function Letter() {
             fontFamily: F.display, fontWeight: 600, color: C.text,
             fontSize: 'clamp(2rem, 4vw, 3rem)', lineHeight: 1.1, letterSpacing: '-0.02em', marginBottom: '2.5rem',
           }}>
-            A letter from the<br />Secretaries-General
+            {lt.heading[0]}<br />{lt.heading[1]}
           </motion.h2>
 
-          <motion.div variants={fadeUp} style={{
-            
-          }}>
+          <motion.div variants={fadeUp}>
             <div style={{ marginTop: '1rem' }}>
-              <p style={{ fontFamily: F.body, fontSize: '0.78rem', color: C.muted, marginBottom: '2rem', fontStyle: 'italic' }}>
-                Best regards,
+              <p style={{ fontFamily: F.body, fontSize: '0.88rem', color: C.text, marginBottom: '1.75rem', lineHeight: 1.75 }}>
+                {lt.salutation}
+              </p>
+              {lt.body.map((p, i) => (
+                <p key={i} style={{ fontFamily: F.body, fontSize: '0.88rem', color: C.text, lineHeight: 1.8, marginBottom: '1.25rem' }}>
+                  {p}
+                </p>
+              ))}
+              <p style={{ fontFamily: F.body, fontSize: '0.78rem', color: C.muted, marginBottom: '2rem', fontStyle: 'italic', marginTop: '2rem' }}>
+                {lt.closing}
               </p>
               <p style={{ fontFamily: F.display, fontSize: '1.05rem', fontWeight: 600, color: C.text, marginBottom: '0.15rem' }}>
                 Manav Purswani
               </p>
               <p style={{ fontFamily: F.body, fontSize: '0.68rem', color: C.muted, marginBottom: '1.5rem' }}>
-                Founding Secretary-General, LINCOLNMUN
+                {lt.titles[0]}
               </p>
               <p style={{ fontFamily: F.display, fontSize: '1.05rem', fontWeight: 600, color: C.text, marginBottom: '0.15rem' }}>
                 Cata Gamero
               </p>
               <p style={{ fontFamily: F.body, fontSize: '0.68rem', color: C.muted, marginBottom: '1.5rem' }}>
-                Founding Secretary-General, LINCOLNMUN
+                {lt.titles[1]}
               </p>
               <p style={{ fontFamily: F.body, fontSize: '0.63rem', color: 'rgba(15,23,42,0.45)', letterSpacing: '0.04em' }}>
                 Asociación Escuelas Lincoln, Buenos Aires, Argentina, 2026
@@ -780,6 +938,8 @@ function Letter() {
 
 /* ─── Contact ────────────────────────────────────────────────────────────── */
 function Contact() {
+  const { footer: ft } = useT()
+  const tx = useT()
   return (
     <section id="contact" style={{ background: C.navyDark, padding: 'clamp(2.5rem, 5vw, 5rem) clamp(1.1rem, 3.5vw, 2.5rem)', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
       <Reveal>
@@ -792,24 +952,24 @@ function Contact() {
               <span style={{ fontFamily: F.display, fontSize: '1rem', fontWeight: 600, color: C.white, letterSpacing: '0.06em' }}>LINCOLNMUN</span>
             </div>
             <p style={{ fontFamily: F.body, fontSize: '0.79rem', lineHeight: 1.8, color: 'rgba(255,255,255,0.33)' }}>
-              A student-run Model United Nations conference. Asociación Escuelas Lincoln, Buenos Aires.
+              {ft.desc}
             </p>
           </div>
 
           {/* Col 2 — Quick Links */}
           <div>
             <p style={{ fontFamily: F.body, fontSize: '0.57rem', letterSpacing: '0.24em', textTransform: 'uppercase', color: C.goldLight, marginBottom: '1.2rem', fontWeight: 600 }}>
-              Quick Links
+              {ft.links}
             </p>
-            {['About', 'Committees', 'Schedule', 'Letter'].map(link => (
-              <a key={link} href={`#${link.toLowerCase()}`} style={{
+            {tx.nav.map(({ label, href }) => (
+              <a key={label} href={href} style={{
                 display: 'block', fontFamily: F.body, fontSize: '0.79rem',
                 color: 'rgba(255,255,255,0.38)', textDecoration: 'none', marginBottom: '0.55rem', transition: 'color 0.2s',
               }}
                 onMouseEnter={e => (e.currentTarget.style.color = C.white)}
                 onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.38)')}
               >
-                {link}
+                {label}
               </a>
             ))}
           </div>
@@ -817,14 +977,9 @@ function Contact() {
           {/* Col 3 — Edition I */}
           <div>
             <p style={{ fontFamily: F.body, fontSize: '0.57rem', letterSpacing: '0.24em', textTransform: 'uppercase', color: C.goldLight, marginBottom: '1.2rem', fontWeight: 600 }}>
-              Edition I
+              {ft.edition}
             </p>
-            {[
-              { label: 'Dates',      value: '2 – 4 October 2026' },
-              { label: 'Location',   value: 'La Lucila, Buenos Aires' },
-              { label: 'Committees', value: '13 · English & Spanish' },
-              { label: 'Delegates',  value: 'Up to 300' },
-            ].map(({ label, value }) => (
+            {ft.facts.map(({ label, value }) => (
               <div key={label} style={{ marginBottom: '0.65rem' }}>
                 <p style={{ fontFamily: F.body, fontSize: '0.5rem', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.22)', marginBottom: '0.1rem' }}>{label}</p>
                 <p style={{ fontFamily: F.body, fontSize: '0.79rem', color: 'rgba(255,255,255,0.55)' }}>{value}</p>
@@ -835,7 +990,7 @@ function Contact() {
           {/* Col 4 — Connect */}
           <div>
             <p style={{ fontFamily: F.body, fontSize: '0.57rem', letterSpacing: '0.24em', textTransform: 'uppercase', color: C.goldLight, marginBottom: '1.2rem', fontWeight: 600 }}>
-              Connect
+              {ft.connect}
             </p>
             {[
               {
@@ -888,6 +1043,7 @@ function Contact() {
 
 /* ─── Footer ─────────────────────────────────────────────────────────────── */
 function Footer() {
+  const { footer: ft } = useT()
   return (
     <footer style={{ background: C.navyDark, borderTop: '1px solid rgba(255,255,255,0.04)', padding: '1.4rem 2.75rem' }}>
       <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
@@ -895,7 +1051,7 @@ function Footer() {
           © 2026 Asociación Escuelas Lincoln · LINCOLNMUN
         </p>
         <p style={{ fontFamily: F.body, fontSize: '0.65rem', color: 'rgba(255,255,255,0.16)', letterSpacing: '0.05em' }}>
-          La Lucila · Buenos Aires Province · Argentina
+          {ft.copyright}
         </p>
       </div>
     </footer>
@@ -904,8 +1060,9 @@ function Footer() {
 
 /* ─── App ────────────────────────────────────────────────────────────────── */
 export default function App() {
+  const [lang, setLang] = useState('en')
   return (
-    <>
+    <LangCtx.Provider value={{ lang, setLang }}>
       <style>{MOBILE_CSS}</style>
       <Navbar />
       <Hero />
@@ -917,6 +1074,6 @@ export default function App() {
       <Schedule />
       <Contact />
       <Footer />
-    </>
+    </LangCtx.Provider>
   )
 }
