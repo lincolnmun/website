@@ -353,7 +353,7 @@ function CommitteeCard({ c, onOpen }) {
         justifyContent: 'center', padding: '1.75rem',
       }}>
         <h3 style={{
-          fontFamily: F.display, fontVariant: 'small-caps', color: C.white,
+          fontFamily: F.display, fontVariant:'small', color: C.white,
           textAlign: 'center', fontSize: 'clamp(1.4rem, 2.4vw, 1.9rem)',
           fontWeight: 600, lineHeight: 1.2, letterSpacing: '0.02em',
           textShadow: '0 1px 12px rgba(0,0,0,0.35)',
@@ -401,29 +401,33 @@ function CommitteeModal({ c, onClose }) {
           outline: 'none',
         }}
       >
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+          <div>
+            <button
+                  onClick={onClose}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '2px', lineHeight: 0 }}
+                  aria-label="Close"
+                >
+                  <svg width="18" height="18" fill="none" stroke={C.muted} strokeWidth="1.8" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+          </div>
+        </div>
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
           <div>
-            <p style={{ fontFamily: F.body, fontSize: '0.6rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: C.gold, fontWeight: 700, marginBottom: '0.35rem' }}>
-              {c.abbr}
-            </p>
+            
             <h2 style={{ fontFamily: F.display, fontSize: '1.55rem', fontWeight: 600, color: C.navy, lineHeight: 1.2 }}>
               {c.name}
             </h2>
+            
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8 }}>
             <span style={{ fontFamily: F.body, fontSize: '0.55rem', letterSpacing: '0.1em', textTransform: 'uppercase', padding: '0.22rem 0.55rem', background: tag.bg, color: tag.fg, fontWeight: 600 }}>
               {tag.label}
             </span>
-            <button
-              onClick={onClose}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '2px', lineHeight: 0 }}
-              aria-label="Close"
-            >
-              <svg width="18" height="18" fill="none" stroke={C.muted} strokeWidth="1.8" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
+            
           </div>
         </div>
 
@@ -453,7 +457,9 @@ function CommitteeModal({ c, onClose }) {
           ))}
         </div>
 
-        {/* Chairs & Contact */}
+
+{/*
+        {/* Chairs & Contact 
         <div style={{ padding: '0.8rem 0.9rem', border: `1px solid ${C.border}`, marginBottom: '0.85rem' }}>
           {[
             { label: 'Chairs', value: c.chairs },
@@ -470,7 +476,7 @@ function CommitteeModal({ c, onClose }) {
           ))}
         </div>
 
-        {/* Topics */}
+        {/* Topics 
         <div>
           <p style={{ fontFamily: F.body, fontSize: '0.5rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: C.muted, marginBottom: '0.6rem' }}>Topics</p>
           {[{ n: 'I', v: c.topic1 }, { n: 'II', v: c.topic2 }].map(({ n, v }) => (
@@ -480,17 +486,19 @@ function CommitteeModal({ c, onClose }) {
             </div>
           ))}
         </div>
+
+*/}
       </motion.div>
     </motion.div>
   )
 }
 
 function Committees() {
-  const [lang, setLang] = useState('all')
+  const [active, setActive] = useState(null) // null = both, else 'en' | 'es'
   const [modal, setModal] = useState(null)
-  const filtered = lang === 'all' ? COMMITTEES : COMMITTEES.filter(c => c.lang === lang)
+  const filtered = active ? COMMITTEES.filter(c => c.lang === active) : COMMITTEES
 
-  const handleLangChange = (key) => { setLang(key) }
+  const toggleLang = (key) => setActive(prev => prev === key ? null : key)
   const handleToggle = (abbr) => setModal(abbr)
 
   return (
@@ -505,24 +513,32 @@ function Committees() {
               Committees
             </motion.h2>
 
-            <motion.div variants={fadeUp} style={{ display: 'flex', border: `1px solid rgba(255,255,255,0.15)` }}>
+            <motion.div variants={fadeUp} style={{ display: 'flex' }}>
               {[
-                { key: 'all', label: 'All · 13' },
-                { key: 'en',  label: 'English · 9' },
-                { key: 'es',  label: 'Español · 4' },
-              ].map(({ key, label }, i) => (
-                <button key={key} onClick={() => handleLangChange(key)} style={{
-                  fontFamily: F.body, fontSize: '0.64rem', letterSpacing: '0.1em', textTransform: 'uppercase',
-                  padding: '0.65rem 1.2rem', border: 'none', cursor: 'pointer',
-                  borderRight: i < 2 ? `1px solid rgba(255,255,255,0.15)` : 'none',
-                  background: lang === key ? C.goldLight : 'transparent',
-                  color: lang === key ? C.navyDark : 'rgba(255,255,255,0.55)',
-                  fontWeight: lang === key ? 600 : 400,
-                  transition: 'background 0.18s, color 0.18s',
-                }}>
-                  {label}
-                </button>
-              ))}
+                { key: 'en', label: 'English' },
+                { key: 'es', label: 'Spanish' },
+              ].map(({ key, label }) => {
+                const on = active === key
+                return (
+                  <button key={key} onClick={() => toggleLang(key)} aria-pressed={on} style={{
+                    position: 'relative', border: 'none', cursor: 'pointer', background: 'transparent',
+                    padding: '0 0 10px',
+                  }}>
+                    <span style={{
+                      display: 'block', background: '#d70e33', color: '#000',
+                      fontFamily: F.display, fontWeight: 600, fontSize: '1.2rem', lineHeight: 1,
+                      padding: '0.55rem 1.4rem',
+                    }}>
+                      {label}
+                    </span>
+                    <span style={{
+                      position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)',
+                      width: '68%', height: 10, background: '#fdb71e',
+                      opacity: on ? 1 : 0, transition: 'opacity 0.18s',
+                    }} />
+                  </button>
+                )
+              })}
             </motion.div>
           </div>
         </Reveal>
@@ -562,39 +578,38 @@ const DAYS = [
   {
     day: 'Day 1', date: 'Friday, 2 October', label: '',
     sessions: [
-      { time: '13:00 – 16:00', activity: 'Setup · Secretariat, Head of Logistics & Tech on site. Rooms dressed; registration prepared.' },
-      { time: '16:00',         activity: 'Doors open · Arriving delegations begin registration' },
-      { time: '16:30 – 17:30', activity: 'Opening Ceremony — Auditorium' },
-      { time: '17:30 – 19:00', activity: 'Committee Session 1' },
-      { time: '19:00',         activity: 'Day 1 close · Dais and Secretariat debrief' },
+      { time: '4:00 PM',         activity: 'Reception  ·  Lobby' },
+      { time: '4:30 PM – 5:30 PM', activity: 'Opening Ceremony  ·  Auditorium' },
+      { time: '5:30 PM – 7:00 PM', activity: 'Committee Session 1' },
+      { time: '7:00 PM',         activity: 'Dais and Secretariat debrief   ·  Mansion' },
     ],
   },
   {
     day: 'Day 2', date: 'Saturday, 3 October', label: '',
     sessions: [
-      { time: '08:30',         activity: 'Doors open · Refreshments' },
+      { time: '08:30',         activity: 'Reception · Lobby' },
       { time: '09:00 – 11:30', activity: 'Committee Session 2' },
       { time: '11:30 – 11:45', activity: 'Break' },
       { time: '11:45 – 13:00', activity: 'Committee Session 3' },
-      { time: '13:00 – 14:30', activity: 'Lunch (1.5 hours)' },
+      { time: '13:00 – 14:30', activity: 'Lunch  ·  Gym/Cafeteria/Library' },
       { time: '14:30 – 17:00', activity: 'Committee Session 4' },
       { time: '17:00 – 17:15', activity: 'Break' },
       { time: '17:15 – 19:00', activity: 'Committee Session 5' },
-      { time: '19:00',         activity: 'Day 2 close' },
+      { time: '19:00',         activity: 'Dais and Secretariat debrief   ·  Mansion' },
     ],
   },
   {
     day: 'Day 3', date: 'Sunday, 4 October', label: '',
     sessions: [
-      { time: '08:30',         activity: 'Doors open · Refreshments' },
+      { time: '08:30',         activity: 'Reception · Lobby' },
       { time: '09:00 – 11:30', activity: 'Committee Session 6' },
-      { time: '11:30 – 11:45', activity: 'Break · Gather information for awards' },
+      { time: '11:30 – 11:45', activity: 'Break' },
       { time: '11:45 – 13:00', activity: 'Committee Session 7' },
-      { time: '13:00 – 14:30', activity: 'Lunch · Dais begins awards deliberation' },
+      { time: '13:00 – 14:30', activity: 'Lunch  ·  Gym/Cafeteria/Library' },
       { time: '14:30 – 15:30', activity: 'Committee Session 8' },
-      { time: '15:30 – 17:00', activity: 'Closing Ceremony — awards, recognitions, thanks' },
-      { time: '17:00 – 19:00', activity: 'Asado & social — food, snacks, games ("stay as long as you can")' },
-      { time: '19:00',         activity: 'Conference concludes · Teardown' },
+      { time: '15:30 – 17:00', activity: 'Closing Ceremony  ·  Auditorium' },
+      { time: '17:00 – 19:00', activity: 'Asado & social Lunch  ·  Middle School Field' },
+      { time: '19:00',         activity: 'Conference Closure' },
     ],
   },
 ]
@@ -694,24 +709,6 @@ function Letter() {
             </div>
           </motion.div>
 
-          <motion.div variants={fadeUp} style={{ marginTop: '3rem', paddingTop: '2rem', borderTop: `1px solid ${C.border}` }}>
-            <p style={{ fontFamily: F.body, fontSize: '0.78rem', color: C.muted, marginBottom: '1.1rem' }}>
-              Questions about registration, committees, or logistics?
-            </p>
-            <a
-              href="mailto:munleadership@lincoln.edu.ar"
-              style={{
-                display: 'inline-block',
-                fontFamily: F.body, fontSize: '0.67rem', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase',
-                background: C.goldLight, color: C.navy, padding: '0.9rem 2rem',
-                textDecoration: 'none', transition: 'background 0.18s',
-              }}
-              onMouseEnter={e => (e.currentTarget.style.background = '#e8a800')}
-              onMouseLeave={e => (e.currentTarget.style.background = C.goldLight)}
-            >
-              Get in touch
-            </a>
-          </motion.div>
         </Reveal>
       </div>
     </section>
