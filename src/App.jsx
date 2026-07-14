@@ -376,7 +376,7 @@ function Navbar() {
         <LangToggle />
       </div>
 
-      <div className="md:hidden" style={{ display: 'flex', alignItems: 'center', marginRight: 4 }}>
+      <div className="flex md:hidden" style={{ alignItems: 'center', marginRight: 4 }}>
         <LangToggle />
       </div>
 
