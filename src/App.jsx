@@ -153,7 +153,7 @@ function Navbar() {
       style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: 'clamp(10px, 1.1vw, 22px) clamp(10px, 1.1vw, 22px)',
+        padding: 'clamp(14px, 1.5vw, 28px) clamp(14px, 1.5vw, 28px)',
         background: solid ? C.navy : 'transparent',
         borderBottom: solid ? '1px solid rgba(255,255,255,0.06)' : 'none',
         transition: 'background 0.4s ease, border-color 0.4s ease',
@@ -161,7 +161,7 @@ function Navbar() {
     >
       <a href="#" style={{ display: 'flex', alignItems: 'center', gap: 11, textDecoration: 'none' }}>
         <img src="/logo.png" alt="Escuelas Lincoln" style={{
-          width: 'clamp(36px, 4.3vw, 80px)', height: 'clamp(36px, 4.3vw, 80px)', borderRadius: '50%', objectFit: 'cover',
+          width: 'clamp(44px, 5.2vw, 96px)', height: 'clamp(44px, 5.2vw, 96px)', borderRadius: '50%', objectFit: 'cover',
         }} />
       </a>
 
@@ -783,18 +783,20 @@ function Contact() {
   return (
     <section id="contact" style={{ background: C.navyDark, padding: 'clamp(2.5rem, 5vw, 5rem) clamp(1.1rem, 3.5vw, 2.5rem)', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
       <Reveal>
-        <div className="grid grid-cols-1 md:grid-cols-3" style={{ maxWidth: 1100, margin: '0 auto', gap: '3.5rem' }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4" style={{ maxWidth: 1100, margin: '0 auto', gap: '3rem' }}>
 
+          {/* Col 1 — Brand */}
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: '1.2rem' }}>
-              <img src="/logo.png" alt="Lincoln" style={{ width: 70, height: 70, borderRadius: '50%', objectFit: 'cover', opacity: 0.78 }} />
+              <img src="/logo.png" alt="Lincoln" style={{ width: 54, height: 54, borderRadius: '50%', objectFit: 'cover', opacity: 0.78 }} />
               <span style={{ fontFamily: F.display, fontSize: '1rem', fontWeight: 600, color: C.white, letterSpacing: '0.06em' }}>LINCOLNMUN</span>
             </div>
             <p style={{ fontFamily: F.body, fontSize: '0.79rem', lineHeight: 1.8, color: 'rgba(255,255,255,0.33)' }}>
-              The founding Model United Nations conference of Asociación Escuelas Lincoln. La Lucila, Buenos Aires Province, Argentina.
+              A student-run Model United Nations conference. Asociación Escuelas Lincoln, Buenos Aires.
             </p>
           </div>
 
+          {/* Col 2 — Quick Links */}
           <div>
             <p style={{ fontFamily: F.body, fontSize: '0.57rem', letterSpacing: '0.24em', textTransform: 'uppercase', color: C.goldLight, marginBottom: '1.2rem', fontWeight: 600 }}>
               Quick Links
@@ -812,39 +814,72 @@ function Contact() {
             ))}
           </div>
 
+          {/* Col 3 — Edition I */}
           <div>
-            <p style={{ fontFamily: F.body, fontSize: '0.57rem', letterSpacing: '0.24em', textTransform: 'uppercase', color: C.goldLight, marginBottom: '1.5rem', fontWeight: 600 }}>
-              Follow Us
+            <p style={{ fontFamily: F.body, fontSize: '0.57rem', letterSpacing: '0.24em', textTransform: 'uppercase', color: C.goldLight, marginBottom: '1.2rem', fontWeight: 600 }}>
+              Edition I
             </p>
-            <div style={{ display: 'flex', gap: '1rem' }}>
-              <a
-                href="mailto:munleadership@lincoln.edu.ar"
-                aria-label="Email us"
-                style={{ color: 'rgba(255,255,255,0.45)', transition: 'color 0.2s', lineHeight: 0 }}
-                onMouseEnter={e => (e.currentTarget.style.color = C.white)}
-                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.45)')}
-              >
-                <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.6" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-              </a>
-              <a
-                href="https://www.instagram.com/lincolnmun.ba/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-                style={{ color: 'rgba(255,255,255,0.45)', transition: 'color 0.2s', lineHeight: 0 }}
-                onMouseEnter={e => (e.currentTarget.style.color = C.white)}
-                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.45)')}
-              >
-                <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.6" viewBox="0 0 24 24">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" strokeLinecap="round" strokeLinejoin="round"/>
-                  <circle cx="12" cy="12" r="4" strokeLinecap="round" strokeLinejoin="round"/>
-                  <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
-                </svg>
-              </a>
-            </div>
+            {[
+              { label: 'Dates',      value: '2 – 4 October 2026' },
+              { label: 'Location',   value: 'La Lucila, Buenos Aires' },
+              { label: 'Committees', value: '13 · English & Spanish' },
+              { label: 'Delegates',  value: 'Up to 300' },
+            ].map(({ label, value }) => (
+              <div key={label} style={{ marginBottom: '0.65rem' }}>
+                <p style={{ fontFamily: F.body, fontSize: '0.5rem', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.22)', marginBottom: '0.1rem' }}>{label}</p>
+                <p style={{ fontFamily: F.body, fontSize: '0.79rem', color: 'rgba(255,255,255,0.55)' }}>{value}</p>
+              </div>
+            ))}
           </div>
+
+          {/* Col 4 — Connect */}
+          <div>
+            <p style={{ fontFamily: F.body, fontSize: '0.57rem', letterSpacing: '0.24em', textTransform: 'uppercase', color: C.goldLight, marginBottom: '1.2rem', fontWeight: 600 }}>
+              Connect
+            </p>
+            {[
+              {
+                href: 'mailto:munleadership@lincoln.edu.ar',
+                label: 'munleadership@lincoln.edu.ar',
+                external: false,
+                icon: (
+                  <svg width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.6" viewBox="0 0 24 24" style={{ flexShrink: 0, marginTop: 2 }}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                ),
+              },
+              {
+                href: 'https://www.instagram.com/lincolnmun.ba/',
+                label: '@lincolnmun.ba',
+                external: true,
+                icon: (
+                  <svg width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.6" viewBox="0 0 24 24" style={{ flexShrink: 0, marginTop: 2 }}>
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <circle cx="12" cy="12" r="4" strokeLinecap="round" strokeLinejoin="round"/>
+                    <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+                  </svg>
+                ),
+              },
+            ].map(({ href, label, external, icon }) => (
+              <a
+                key={label}
+                href={href}
+                {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                style={{
+                  display: 'flex', alignItems: 'flex-start', gap: '0.6rem',
+                  fontFamily: F.body, fontSize: '0.79rem',
+                  color: 'rgba(255,255,255,0.38)', textDecoration: 'none',
+                  marginBottom: '0.75rem', transition: 'color 0.2s',
+                }}
+                onMouseEnter={e => (e.currentTarget.style.color = C.white)}
+                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.38)')}
+              >
+                {icon}
+                <span>{label}</span>
+              </a>
+            ))}
+          </div>
+
         </div>
       </Reveal>
     </section>
