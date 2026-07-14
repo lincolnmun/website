@@ -573,6 +573,37 @@ function Committees() {
   )
 }
 
+/* ─── Countdown band  ─────────────────── */
+function Countdown() {
+  const { d, h, m, s } = useCountdown('2026-10-02T16:00:00-03:00')
+  const units = [{ v: d, l: 'Days' }, { v: h, l: 'Hours' }, { v: m, l: 'Minutes' }, { v: s, l: 'Seconds' }]
+  return (
+    // ponytail: 50/50 gradient puts the color seam through the vertical center of the band;
+    // 0.5in top padding is the requested breather below the committee cards.
+    <div style={{ background: `linear-gradient(to bottom, ${C.navy} 50%, ${C.navyMid} 50%)`, padding: '0.5in 1.5rem 3.5rem' }}>
+      <Reveal>
+        <motion.div variants={fadeUp} style={{
+          display: 'flex', justifyContent: 'center', flexWrap: 'wrap',
+          gap: 'clamp(1.5rem, 6vw, 4.5rem)', maxWidth: 1000, margin: '0 auto',
+          background: C.navyDark, padding: '2.75rem 3rem',
+          boxShadow: '0 24px 60px rgba(8,13,28,0.35)',
+        }}>
+          {units.map(({ v, l }) => (
+            <div key={l} style={{ textAlign: 'center' }}>
+              <div style={{ fontFamily: F.display, fontWeight: 600, color: C.gold, fontSize: 'clamp(3rem, 9vw, 6.5rem)', lineHeight: 1 }}>
+                {String(v).padStart(2, '0')}
+              </div>
+              <div style={{ fontFamily: F.body, fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: C.offWhite, marginTop: 10 }}>
+                {l}
+              </div>
+            </div>
+          ))}
+        </motion.div>
+      </Reveal>
+    </div>
+  )
+}
+
 /* ─── Schedule ───────────────────────────────────────────────────────────── */
 const DAYS = [
   {
@@ -728,7 +759,7 @@ function Contact() {
               <span style={{ fontFamily: F.display, fontSize: '1rem', fontWeight: 600, color: C.white, letterSpacing: '0.06em' }}>LINCOLNMUN</span>
             </div>
             <p style={{ fontFamily: F.body, fontSize: '0.79rem', lineHeight: 1.8, color: 'rgba(255,255,255,0.33)' }}>
-              The founding Model United Nations conference of Asociación Escuelas Lincoln. Vicente López, Buenos Aires Province, Argentina.
+              The founding Model United Nations conference of Asociación Escuelas Lincoln. La Lucila, Buenos Aires Province, Argentina.
             </p>
           </div>
 
@@ -764,7 +795,7 @@ function Contact() {
               munleadership@lincoln.edu.ar
             </a>
             <p style={{ fontFamily: F.body, fontSize: '0.75rem', color: 'rgba(255,255,255,0.24)', lineHeight: 1.75 }}>
-              Asociación Escuelas Lincoln<br />Vicente López, Buenos Aires<br />Argentina
+              Asociación Escuelas Lincoln<br />La Lucila, Buenos Aires<br />Argentina
             </p>
           </div>
         </div>
@@ -779,10 +810,10 @@ function Footer() {
     <footer style={{ background: C.navyDark, borderTop: '1px solid rgba(255,255,255,0.04)', padding: '1.4rem 2.75rem' }}>
       <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
         <p style={{ fontFamily: F.body, fontSize: '0.65rem', color: 'rgba(255,255,255,0.2)', letterSpacing: '0.05em' }}>
-          © 2026 Asociación Escuelas Lincoln · LINCOLNMUN I
+          © 2026 Asociación Escuelas Lincoln · LINCOLNMUN
         </p>
         <p style={{ fontFamily: F.body, fontSize: '0.65rem', color: 'rgba(255,255,255,0.16)', letterSpacing: '0.05em' }}>
-          Vicente López · Buenos Aires Province · Argentina
+          La Lucila · Buenos Aires Province · Argentina
         </p>
       </div>
     </footer>
@@ -799,6 +830,7 @@ export default function App() {
       <About />
       <Letter />
       <Committees />
+      <Countdown />
       <Schedule />
       <Contact />
       <Footer />
