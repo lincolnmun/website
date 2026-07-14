@@ -9,6 +9,7 @@ const MOBILE_CSS = `
     /* About image column — give it explicit height on mobile */
     .about-image-col { position: relative !important; height: 420px !important; inset: auto !important; }
     /* CommitteeModal full-screen on phones */
+    :root { --orphan-col: auto; }
     .committee-modal-panel {
       max-width: 100% !important; width: 100% !important;
       max-height: 100dvh !important; height: 100dvh !important;
@@ -142,8 +143,8 @@ function Navbar() {
       transition={{ duration: 0.6, delay: 0.2 }}
       style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-        height: 100, display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '0 2.75rem',
+        height: 72, display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        padding: '0 3.5rem',
         background: solid ? C.navy : 'transparent',
         borderBottom: solid ? '1px solid rgba(255,255,255,0.06)' : 'none',
         transition: 'background 0.4s ease, border-color 0.4s ease',
@@ -151,7 +152,7 @@ function Navbar() {
     >
       <a href="#" style={{ display: 'flex', alignItems: 'center', gap: 11, textDecoration: 'none' }}>
         <img src="/logo.png" alt="Escuelas Lincoln" style={{
-          width: 100, height: 100, borderRadius: '50%', objectFit: 'cover',
+          width: 52, height: 52, borderRadius: '50%', objectFit: 'cover',
         }} />
       </a>
 
@@ -522,7 +523,7 @@ function CommitteeModal({ c, onClose }) {
 }
 
 function Committees() {
-  const [active, setActive] = useState(null) // null = both, else 'en' | 'es'
+  const [active, setActive] = useState('en')
   const [modal, setModal] = useState(null)
   const filtered = active ? COMMITTEES.filter(c => c.lang === active) : COMMITTEES
 
@@ -574,7 +575,7 @@ function Committees() {
               const cols = 3
               const orphans = filtered.length % cols
               const isOrphan = orphans > 0 && i >= filtered.length - orphans
-              const orphanStyle = isOrphan && orphans === 1 ? { gridColumnStart: 2 } : {}
+              const orphanStyle = isOrphan && orphans === 1 ? { gridColumnStart: 'var(--orphan-col, 2)' } : {}
               return (
                 <div key={c.abbr} style={orphanStyle}>
                   <CommitteeCard c={c} onOpen={() => handleToggle(c.abbr)} />
