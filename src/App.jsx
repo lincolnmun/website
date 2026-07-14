@@ -1,6 +1,33 @@
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { useState, useRef, useEffect } from 'react'
 
+const MOBILE_CSS = `
+  @media (max-width: 767px) {
+    /* Tighter section padding on phones */
+    section { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
+    section[style*="7rem"] { padding-top: 4rem !important; padding-bottom: 4rem !important; }
+    /* About image column — give it explicit height on mobile */
+    .about-image-col { position: relative !important; height: 420px !important; inset: auto !important; }
+    /* CommitteeModal full-screen on phones */
+    .committee-modal-panel {
+      max-width: 100% !important; width: 100% !important;
+      max-height: 100dvh !important; height: 100dvh !important;
+      padding: 1.5rem 1.25rem 2rem !important;
+      border-radius: 0 !important;
+    }
+    /* Countdown — smaller numbers on tiny screens */
+    .countdown-unit { padding: 0.75rem 0.85rem !important; }
+    /* StatsStrip — 3 cols, hide last two on very small or wrap cleanly */
+    .stats-strip-grid { grid-template-columns: repeat(3, 1fr) !important; }
+    /* Nav mobile menu wider touch targets */
+    .mobile-nav-link { padding: 0.9rem 0 !important; font-size: 1.35rem !important; }
+    /* Letter max-width full on phone */
+    #letter > div { max-width: 100% !important; }
+    /* Schedule session rows */
+    .schedule-row { flex-direction: column !important; gap: 0.3rem !important; }
+  }
+`
+
 /* ─── Design Tokens ─────────────────────────────────────────────────────── */
 const C = {
   navy:      '#182343',
@@ -231,7 +258,7 @@ function StatsStrip() {
   ]
   return (
     <div style={{ background: C.navy, borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-      <div className="grid grid-cols-3 md:grid-cols-5" style={{ maxWidth: 1100, margin: '0 auto' }}>
+      <div className="stats-strip-grid grid grid-cols-3 md:grid-cols-5" style={{ maxWidth: 1100, margin: '0 auto' }}>
         {items.map(({ v, l }, i) => (
           <div key={l} style={{
             padding: '5rem 0.75rem', textAlign: 'center',
@@ -271,7 +298,7 @@ function About() {
         </Reveal>
 
         <Reveal style={{ position: 'relative' }}>
-          <motion.div variants={fadeUp} style={{ overflow: 'hidden', position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column' }}>
+          <motion.div variants={fadeUp} className="about-image-col" style={{ overflow: 'hidden', position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column' }}>
             <img src="/classroom.jpg" alt="Delegates in committee session" style={{ display: 'block', width: '100%', flex: 1, minHeight: 0, objectFit: 'cover', objectPosition: 'center 20%' }} />
             <div style={{ flex: '1 1 0', minHeight: 0, background: C.navy, padding: '0 2.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <p style={{ fontFamily: F.display, fontSize: '2rem', fontWeight: 600, color: C.goldLight, lineHeight: 1.1, letterSpacing: '-0.01em', textAlign: 'center', whiteSpace: 'nowrap', margin: 0 }}>
@@ -390,6 +417,7 @@ function CommitteeModal({ c, onClose }) {
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 16, scale: 0.97 }}
         transition={{ duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
+        className="committee-modal-panel"
         onClick={e => e.stopPropagation()}
         onKeyDown={handleKey}
         tabIndex={-1}
@@ -513,7 +541,7 @@ function Committees() {
               Committees
             </motion.h2>
 
-            <motion.div variants={fadeUp} style={{ display: 'flex' }}>
+            <motion.div variants={fadeUp} style={{ display: 'flex', gap: '0.25rem' }}>
               {[
                 { key: 'en', label: 'English' },
                 { key: 'es', label: 'Spanish' },
@@ -521,21 +549,15 @@ function Committees() {
                 const on = active === key
                 return (
                   <button key={key} onClick={() => toggleLang(key)} aria-pressed={on} style={{
-                    position: 'relative', border: 'none', cursor: 'pointer', background: 'transparent',
-                    padding: '0 0 10px',
+                    border: `1px solid ${on ? C.goldLight : 'rgba(255,255,255,0.15)'}`,
+                    cursor: 'pointer', background: on ? C.goldLight : 'transparent',
+                    padding: '0.5rem 1.2rem',
+                    fontFamily: F.body, fontWeight: 600, fontSize: '0.72rem',
+                    letterSpacing: '0.1em', textTransform: 'uppercase',
+                    color: on ? C.navy : 'rgba(255,255,255,0.5)',
+                    transition: 'all 0.18s',
                   }}>
-                    <span style={{
-                      display: 'block', background: '#d70e33', color: '#000',
-                      fontFamily: F.display, fontWeight: 600, fontSize: '1.2rem', lineHeight: 1,
-                      padding: '0.55rem 1.4rem',
-                    }}>
-                      {label}
-                    </span>
-                    <span style={{
-                      position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)',
-                      width: '68%', height: 10, background: '#fdb71e',
-                      opacity: on ? 1 : 0, transition: 'opacity 0.18s',
-                    }} />
+                    {label}
                   </button>
                 )
               })}
@@ -589,7 +611,7 @@ function Countdown() {
           boxShadow: '0 24px 60px rgba(8,13,28,0.35)',
         }}>
           {units.map(({ v, l }) => (
-            <div key={l} style={{ textAlign: 'center' }}>
+            <div key={l} className="countdown-unit" style={{ textAlign: 'center' }}>
               <div style={{ fontFamily: F.display, fontWeight: 600, color: C.gold, fontSize: 'clamp(3rem, 9vw, 6.5rem)', lineHeight: 1 }}>
                 {String(v).padStart(2, '0')}
               </div>
@@ -781,22 +803,37 @@ function Contact() {
           </div>
 
           <div>
-            <p style={{ fontFamily: F.body, fontSize: '0.57rem', letterSpacing: '0.24em', textTransform: 'uppercase', color: C.goldLight, marginBottom: '1.2rem', fontWeight: 600 }}>
-              Contact
+            <p style={{ fontFamily: F.body, fontSize: '0.57rem', letterSpacing: '0.24em', textTransform: 'uppercase', color: C.goldLight, marginBottom: '1.5rem', fontWeight: 600 }}>
+              Follow Us
             </p>
-            <p style={{ fontFamily: F.body, fontSize: '0.79rem', color: 'rgba(255,255,255,0.32)', marginBottom: '0.5rem' }}>Founding Secretariat</p>
-            <a href="mailto:munleadership@lincoln.edu.ar" style={{
-              fontFamily: F.body, fontSize: '0.79rem', color: 'rgba(255,255,255,0.58)',
-              textDecoration: 'none', display: 'block', marginBottom: '1rem', transition: 'color 0.2s',
-            }}
-              onMouseEnter={e => (e.currentTarget.style.color = C.white)}
-              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.58)')}
-            >
-              munleadership@lincoln.edu.ar
-            </a>
-            <p style={{ fontFamily: F.body, fontSize: '0.75rem', color: 'rgba(255,255,255,0.24)', lineHeight: 1.75 }}>
-              Asociación Escuelas Lincoln<br />La Lucila, Buenos Aires<br />Argentina
-            </p>
+            <div style={{ display: 'flex', gap: '1rem' }}>
+              <a
+                href="mailto:munleadership@lincoln.edu.ar"
+                aria-label="Email us"
+                style={{ color: 'rgba(255,255,255,0.45)', transition: 'color 0.2s', lineHeight: 0 }}
+                onMouseEnter={e => (e.currentTarget.style.color = C.white)}
+                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.45)')}
+              >
+                <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.6" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </a>
+              <a
+                href="https://www.instagram.com/lincolnmun.ba/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                style={{ color: 'rgba(255,255,255,0.45)', transition: 'color 0.2s', lineHeight: 0 }}
+                onMouseEnter={e => (e.currentTarget.style.color = C.white)}
+                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.45)')}
+              >
+                <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.6" viewBox="0 0 24 24">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <circle cx="12" cy="12" r="4" strokeLinecap="round" strokeLinejoin="round"/>
+                  <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
       </Reveal>
@@ -824,6 +861,7 @@ function Footer() {
 export default function App() {
   return (
     <>
+      <style>{MOBILE_CSS}</style>
       <Navbar />
       <Hero />
       <StatsStrip />
