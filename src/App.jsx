@@ -68,13 +68,12 @@ const T = {
     },
     letter: {
       heading: ['A letter from the', 'Secretaries-General'],
-      salutation: 'Honorable Chairs, Esteemed Delegates, and Fellow Guests,',
+      salutation: 'Honorable chairs, esteemed delegates, and distinguished advisors,',
       body: [
-        'Most schools in Buenos Aires don\'t have reliable access to Model UN. Not on a yearly schedule you can actually plan around, not without depending on whichever teacher happens to run one that year. That gap is the entire reason LINCOLNMUN exists.',
-        'We split the work roughly down the middle. One of us has spent this year buried in committee topics, procedure, and a 250-page handbook most delegates will only ever skim. The other has spent it calling schools that had never heard of Lincoln\'s conference and asking them to send students anyway, with nothing to point to yet except a plan. Neither job was the easy one.',
-        'If the conference feels effortless once you\'re actually in the room, that\'s not an accident. It\'s the two of us spending a year making sure you never have to think about the parts that don\'t work.',
-        'What LINCOLNMUN becomes from here, whether the schools that gave us a first chance decide to come back, gets settled in your committee room this October. Not in anything we write here.',
-        'See you there.',
+        'We are ecstatic to warmly welcome you to Asociación Escuelas Lincoln as the Secretaries-General for the First Edition of LINCOLNMUN, which will take place from Friday, October 2nd, to Sunday, October 4th, 2026.',
+        'We are two seniors who are currently enrolled in Asociación Escuelas Lincoln that have a combined background of more than nine years in Model United Nations, debate, and public speaking. Model UN has been a primary component of our secondary school experience, including competing in international public speaking competitions, national debates, chairing, and winning the title of best delegate at international conferences. Our objective is to create an experience that provides more students in the Buenos Aires area with an equivalent opportunity, with plans to eventually expand to other areas.',
+        'Built by students for students, LINCOLNMUN provides a plethora of leadership opportunities for students in Argentina. In addition to conducting ceremonies, students are responsible for chairing thirteen committees. The conference is accessible to all, regardless of whether they are experienced or first-time delegations. Committees are conducted in both English and Spanish, thereby guaranteeing a highly inclusive environment that corresponds to the individual needs of each delegate.',
+        'As we approach LINCOLNMUN, we are eager to reveal the diligent efforts of our students and staff to provide a first-rate edition for all. We aspire to provide delegates, both new and old, with an experience that they will cherish by offering a wide range of committees and limitless opportunities for student leadership.',
       ],
       closing: 'Best regards,',
       titles: ['Founding Secretary-General, LINCOLNMUN', 'Founding Secretary-General, LINCOLNMUN'],
@@ -155,13 +154,12 @@ const T = {
     },
     letter: {
       heading: ['Una carta de los', 'Secretarios Generales'],
-      salutation: 'Honorables Presidentes, Estimados Delegados y Queridos Invitados,',
+      salutation: 'Honorables presidentes, estimados delegados y distinguidos asesores,',
       body: [
-        'La mayoría de los colegios de Buenos Aires no tienen acceso confiable a Modelo de Naciones Unidas. No con un calendario anual en el que realmente se pueda planificar, no sin depender de cualquier docente que decida organizarlo ese año. Esa brecha es exactamente la razón por la que existe LINCOLNMUN.',
-        'Dividimos el trabajo más o menos a la mitad. Uno de nosotros pasó este año inmerso en temas de comité, procedimientos y un manual de 250 páginas que la mayoría de los delegados apenas hojearán. El otro lo pasó llamando a colegios que nunca habían escuchado hablar de la conferencia de Lincoln y pidiéndoles que enviaran estudiantes de todas formas, sin nada concreto que mostrar excepto un plan. Ninguno de los dos tuvo la parte fácil.',
-        'Si la conferencia parece sin esfuerzo una vez que estás en la sala, no es casualidad. Es el resultado de que ambos pasamos un año asegurándonos de que nunca tengas que pensar en las partes que no funcionan.',
-        'Lo que se convierta LINCOLNMUN a partir de acá, si los colegios que nos dieron una primera oportunidad deciden volver, se define en tu sala de comité este octubre. No en nada de lo que escribamos acá.',
-        'Nos vemos ahí.',
+        'Nos alegra inmensamente darles la más cálida bienvenida a Asociación Escuelas Lincoln como los Secretarios Generales de la Primera Edición de LINCOLNMUN, que tendrá lugar desde el viernes 2 de octubre hasta el domingo 4 de octubre de 2026.',
+        'Somos dos estudiantes de último año actualmente matriculados en Asociación Escuelas Lincoln, con una experiencia combinada de más de nueve años en Modelo de Naciones Unidas, debate y oratoria. El Modelo de Naciones Unidas ha sido un componente fundamental de nuestra experiencia en la escuela secundaria, que incluye participar en competencias internacionales de oratoria, debates nacionales, presidir comités y ganar el título de mejor delegado en conferencias internacionales. Nuestro objetivo es crear una experiencia que brinde a más estudiantes de la zona de Buenos Aires una oportunidad equivalente, con planes de expandirnos eventualmente a otras áreas.',
+        'Construido por estudiantes para estudiantes, LINCOLNMUN ofrece una gran cantidad de oportunidades de liderazgo para estudiantes en Argentina. Además de conducir las ceremonias, los estudiantes son responsables de presidir trece comités. La conferencia es accesible para todos, independientemente de si son delegaciones con experiencia o participantes por primera vez. Los comités se llevan a cabo tanto en inglés como en español, garantizando así un entorno sumamente inclusivo que responde a las necesidades individuales de cada delegado.',
+        'A medida que nos acercamos a LINCOLNMUN, estamos ansiosos por revelar el trabajo dedicado de nuestros estudiantes y personal para ofrecer una edición de primer nivel para todos. Aspiramos a brindarles a los delegados, tanto nuevos como veteranos, una experiencia que atesorarán, ofreciendo una amplia variedad de comités e infinitas oportunidades de liderazgo estudiantil.',
       ],
       closing: 'Atentamente,',
       titles: ['Secretario General Fundador, LINCOLNMUN', 'Secretaria General Fundadora, LINCOLNMUN'],
@@ -533,11 +531,11 @@ function About() {
 /* ─── Committees ─────────────────────────────────────────────────────────── */
 const IMG = id => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=800&q=70`
 const COMMITTEES = [
-  { abbr: 'UNSC',  name: 'Security Council',           lang: 'en', seats: 15, type: 'parliamentary', note: 'Advanced',          room: '4th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: IMG('1548630435-998a2cbbff67') },
+  { abbr: 'UNSC',  name: 'Security Council',           lang: 'en', seats: 15, type: 'parliamentary', note: 'Advanced',          room: '4th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: null },
   { abbr: 'GA',    name: 'General Assembly',            lang: 'en', seats: 50, type: 'parliamentary', note: 'Beginner · Large',   room: 'Auditorium',           chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: IMG('1714568834394-0407d393e4b7') },
-  { abbr: 'ECOSOC',name: 'ECOSOC',                      lang: 'en', seats: 20, type: 'parliamentary', note: 'Intermediate',       room: '4th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: IMG('1579227114496-27346f474519') },
+  { abbr: 'ECOSOC',name: 'ECOSOC',                      lang: 'en', seats: 20, type: 'parliamentary', note: 'Intermediate',       room: '4th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: null },
   { abbr: 'UNHRC', name: 'Human Rights Council',        lang: 'en', seats: 20, type: 'parliamentary', note: 'Intermediate',       room: '4th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: IMG('1594415156128-af1d8788db6c') },
-  { abbr: 'PC',    name: 'Political Committee',         lang: 'en', seats: 20, type: 'parliamentary', note: 'Intermediate',       room: '4th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: IMG('1782998307726-f93ec14eda24') },
+  { abbr: 'PC',    name: 'Political Committee',         lang: 'en', seats: 20, type: 'parliamentary', note: 'Intermediate',       room: '4th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: null },
   { abbr: 'ICJ',   name: "Int'l Court of Justice",      lang: 'en', seats: 15, type: 'court',         note: 'Advanced',          room: '4th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: IMG('1768839719921-6a554fb3e847') },
   { abbr: 'ICC',   name: "Int'l Criminal Court",        lang: 'en', seats: 30, type: 'court',         note: 'Advanced',          room: 'Library',              chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: IMG('1768839722927-df0ef3188f6d') },
   { abbr: 'HICC',  name: 'Historical ICC',              lang: 'en', seats: 30, type: 'court',         note: 'Advanced · Historical', room: 'Aula Magna',        chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: IMG('1676181739859-08330dea8999') },
@@ -568,13 +566,13 @@ function CommitteeCard({ c, onOpen }) {
       onMouseEnter={e => { const img = e.currentTarget.querySelector('img'); if (img) img.style.transform = 'scale(1.06)' }}
       onMouseLeave={e => { const img = e.currentTarget.querySelector('img'); if (img) img.style.transform = 'scale(1)' }}
     >
-      <img
+      {c.img && <img
         src={c.img} alt={c.name} loading="lazy"
         style={{
           position: 'absolute', inset: 0, width: '100%', height: '100%',
           objectFit: 'cover', transition: 'transform 0.55s ease',
         }}
-      />
+      />}
       <div style={{
         position: 'absolute', inset: 0,
         background: 'linear-gradient(to top, rgba(8, 13, 28) 0%, rgba(24,35,67,0.62) 45%, rgba(24,35,67,0.30) 100%)',
