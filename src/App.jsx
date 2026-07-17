@@ -76,7 +76,7 @@ const T = {
         'As we approach LINCOLNMUN, we are eager to reveal the diligent efforts of our students and staff to provide a first-rate edition for all. We aspire to provide delegates, both new and old, with an experience that they will cherish by offering a wide range of committees and limitless opportunities for student leadership.',
       ],
       closing: 'Best regards,',
-      titles: ['Founding Secretary-General, LINCOLNMUN', 'Founding Secretary-General, LINCOLNMUN'],
+      titles: ['LINCOLNMUN, 2026', 'LINCOLNMUN, 2026'],
     },
     footer: {
       desc: 'A student-run Model United Nations conference. Asociación Escuelas Lincoln, Buenos Aires.',
@@ -532,7 +532,7 @@ function About() {
 const IMG = id => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=800&q=70`
 const COMMITTEES = [
   { abbr: 'UNSC',  name: 'Security Council',           lang: 'en', seats: 15, type: 'parliamentary', note: 'Advanced',          room: '4th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: IMG('1727221167365-d365e63e7ebc') },
-  { abbr: 'GA',    name: 'General Assembly',            lang: 'en', seats: 50, type: 'parliamentary', note: 'Beginner · Large',   room: 'Auditorium',           chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: IMG('1519276649662-7bd2db2658fe') },
+  { abbr: 'GA',    name: 'General Assembly',            lang: 'en', seats: 50, type: 'parliamentary', note: 'Beginner · Large',   room: 'Auditorium',           chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: IMG('1673296630925-a16a5592cc14') },
   { abbr: 'ECOSOC',name: 'ECOSOC',                      lang: 'en', seats: 20, type: 'parliamentary', note: 'Intermediate',       room: '4th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: IMG('1633158829585-23ba8f7c8caf') },
   { abbr: 'UNHRC', name: 'Human Rights Council',        lang: 'en', seats: 20, type: 'parliamentary', note: 'Intermediate',       room: '4th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: IMG('1594415156128-af1d8788db6c') },
   { abbr: 'PC',    name: 'Political Committee',         lang: 'en', seats: 20, type: 'parliamentary', note: 'Intermediate',       room: '4th Floor · Room TBC', chairs: 'TBC', contact: 'TBC', topic1: 'TBC', topic2: 'TBC', img: IMG('1477281765962-ef34e8bb0967') },
@@ -914,13 +914,13 @@ function Letter() {
                 {lt.closing}
               </p>
               <p style={{ fontFamily: F.display, fontSize: '1.05rem', fontWeight: 600, color: C.text, marginBottom: '0.15rem' }}>
-                Manav Purswani
+                Secretary-General Purswani
               </p>
               <p style={{ fontFamily: F.body, fontSize: '0.68rem', color: C.muted, marginBottom: '1.5rem' }}>
                 {lt.titles[0]}
               </p>
               <p style={{ fontFamily: F.display, fontSize: '1.05rem', fontWeight: 600, color: C.text, marginBottom: '0.15rem' }}>
-                Cata Gamero
+                Secretary-General Gamero
               </p>
               <p style={{ fontFamily: F.body, fontSize: '0.68rem', color: C.muted, marginBottom: '1.5rem' }}>
                 {lt.titles[1]}
