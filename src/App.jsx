@@ -108,7 +108,7 @@ const T = {
       p2: 'Desde la ceremonia de apertura hasta el asado de cierre, cada elemento de la conferencia está a cargo de estudiantes. Además de delegar, los estudiantes pueden postularse para presidir alguno de nuestros trece comités, una oportunidad única de asumir roles de liderazgo antes de que comiencen las sesiones.',
       p3: 'LINCOLNMUN da la bienvenida tanto a delegaciones con experiencia como a las que participan por primera vez, asignando a los delegados roles acordes al nivel de cada escuela. Bilingüe por diseño, dos tercios de nuestros comités se desarrollan en inglés y un tercio en español, lo que hace de LINCOLNMUN la conferencia de MUN bilingüe más equilibrada de Argentina.',
       tagline: 'Hecho por estudiantes, para estudiantes.',
-      stat1: 'Conferencias en Inglés',
+      stat1: 'Comités en Inglés',
       stat2: 'Abierto a Todos',
     },
     committees: {
