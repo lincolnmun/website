@@ -22,7 +22,7 @@ const T = {
       p2: 'From the opening ceremony to the closing asado, every element of the conference is run by students. Beyond delegating, students may apply to chair across any of our thirteen committees, presenting a unique opportunity for students to assume leadership roles before committee sessions begin.',
       p3: 'LINCOLNMUN welcomes experienced and first-time delegations alike, matching delegates to roles that meet each school where they are. Bilingual by design, two-thirds of our committees run in English and one-third in Spanish, making LINCOLNMUN the most balanced bilingual Model UN conference in Argentina.',
       tagline: 'For students, by students.',
-      stat1: 'English Conferences',
+      stat1: 'English Committees',
       stat2: 'Open to All',
     },
     committees: {
