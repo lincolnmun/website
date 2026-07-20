@@ -12,9 +12,10 @@ export const T = {
     },
     nav: [
       { label: 'About',      href: '#about' },
+      { label: 'Letter',     href: '#letter' },
       { label: 'Committees', href: '#committees' },
       { label: 'Schedule',   href: '#schedule' },
-      { label: 'Letter',     href: '#letter' },
+      
     ],
     hero: { date: 'October 2nd – October 4th 2026 · Vicente López, Buenos Aires' },
     stats: ['Committees', 'Delegate Seats', 'Chairs', 'Conference Days', 'Languages'],
@@ -103,10 +104,11 @@ export const T = {
       ogDescription: 'Tres días de debate, diplomacia y liderazgo en el Modelo ONU (MUN) bilingüe más equilibrado de Argentina, organizados enteramente por estudiantes. 13 comités en inglés y español. Inscribite para el 2 al 4 de octubre de 2026.',
     },
     nav: [
-      { label: 'Sobre Nosotros', href: '#about' },
+      { label: 'Sobre el Programa', href: '#about' },
+      { label: 'Carta',          href: '#letter' },
       { label: 'Comités',        href: '#committees' },
       { label: 'Programa',       href: '#schedule' },
-      { label: 'Carta',          href: '#letter' },
+
     ],
     hero: { date: '2 al 4 de octubre de 2026 · Vicente López, Buenos Aires' },
     stats: ['Comités', 'Lugares para Delegados', 'Presidentes', 'Días de Conferencia', 'Idiomas'],

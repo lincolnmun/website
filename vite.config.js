@@ -27,8 +27,12 @@ function renderHead(lang, t) {
 
 /* Build a semantic no-JS / SEO fallback from the site content (English).
    React clears #root on mount, so this is invisible to JS users. */
-function renderFallback(t, committees, sg) {
+function renderFallback(lang, t, committees, sg) {
   const parts = [
+    // Crawlable link to the other language — the only inter-page link Google
+    // can follow (the visible switcher is a JS button). Lives in the fallback,
+    // which is the crawler-facing DOM.
+    lang === 'es' ? `<a href="/">English version</a>` : `<a href="/es/">Versión en español</a>`,
     `<h1>LINCOLNMUN</h1>`,
     p('Asociación Escuelas Lincoln'),
     p(t.hero.date),
@@ -69,7 +73,7 @@ function seoFallback() {
       const { T, COMMITTEES, SG } = await content()
       return html
         .replace('<!--SEO-->', renderHead('en', T.en))
-        .replace('<div id="root"></div>', fallbackDiv(renderFallback(T.en, COMMITTEES, SG)))
+        .replace('<div id="root"></div>', fallbackDiv(renderFallback('en', T.en, COMMITTEES, SG)))
     },
     // Emit the Spanish twin at /es/ by cloning the finished English HTML on
     // disk and swapping lang, head, and fallback. writeBundle runs after Vite
@@ -82,7 +86,7 @@ function seoFallback() {
       const es = enHtml
         .replace('<html lang="en">', '<html lang="es">')
         .replace(renderHead('en', T.en), renderHead('es', T.es))
-        .replace(fallbackDiv(renderFallback(T.en, COMMITTEES, SG)), fallbackDiv(renderFallback(T.es, COMMITTEES, SG)))
+        .replace(fallbackDiv(renderFallback('en', T.en, COMMITTEES, SG)), fallbackDiv(renderFallback('es', T.es, COMMITTEES, SG)))
       await mkdir(join(opts.dir, 'es'), { recursive: true })
       await writeFile(join(opts.dir, 'es', 'index.html'), es)
     },
