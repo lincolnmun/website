@@ -25,6 +25,38 @@ function renderHead(lang, t) {
   ].join('\n    ')
 }
 
+/* Per-language JSON-LD Event schema. Only the localized fields (description,
+   inLanguage) vary; proper nouns and dates stay the same across languages.
+   Replaces the <!--JSONLD--> marker in index.html. */
+function renderJsonLd(lang, t) {
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'Event',
+    name: 'LINCOLNMUN',
+    description: t.meta.description,
+    inLanguage: lang,
+    startDate: '2026-10-02',
+    endDate: '2026-10-04',
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    location: {
+      '@type': 'Place',
+      name: 'Asociación Escuelas Lincoln',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'La Lucila, Vicente López',
+        addressRegion: 'Buenos Aires Province',
+        addressCountry: 'AR',
+      },
+    },
+    organizer: [
+      { '@type': 'Organization', name: 'LINCOLNMUN', url: 'https://lincolnmun.org' },
+      { '@type': 'Organization', name: 'Asociación Escuelas Lincoln', url: 'https://www.lincoln.edu.ar/' },
+    ],
+  }
+  return `<script type="application/ld+json">\n      ${JSON.stringify(data, null, 2)}\n    </script>`
+}
+
 /* Build a semantic no-JS / SEO fallback from the site content (English).
    React clears #root on mount, so this is invisible to JS users. */
 function renderFallback(lang, t, committees, sg) {
@@ -73,6 +105,7 @@ function seoFallback() {
       const { T, COMMITTEES, SG } = await content()
       return html
         .replace('<!--SEO-->', renderHead('en', T.en))
+        .replace('<!--JSONLD-->', renderJsonLd('en', T.en))
         .replace('<div id="root"></div>', fallbackDiv(renderFallback('en', T.en, COMMITTEES, SG)))
     },
     // Emit the Spanish twin at /es/ by cloning the finished English HTML on
@@ -86,6 +119,7 @@ function seoFallback() {
       const es = enHtml
         .replace('<html lang="en">', '<html lang="es">')
         .replace(renderHead('en', T.en), renderHead('es', T.es))
+        .replace(renderJsonLd('en', T.en), renderJsonLd('es', T.es))
         .replace(fallbackDiv(renderFallback('en', T.en, COMMITTEES, SG)), fallbackDiv(renderFallback('es', T.es, COMMITTEES, SG)))
       await mkdir(join(opts.dir, 'es'), { recursive: true })
       await writeFile(join(opts.dir, 'es', 'index.html'), es)

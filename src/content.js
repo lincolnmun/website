@@ -5,10 +5,10 @@
 export const T = {
   en: {
     meta: {
-      title: 'LINCOLNMUN | Model United Nations Conference · Buenos Aires',
-      description: 'Model UN at Asociación Escuelas Lincoln, Buenos Aires — October 2–4, 2026. Most balanced bilingual, student-run conference with 13 committees, open to all levels of experience.',
-      ogTitle: 'LINCOLNMUN | Model United Nations Conference · Buenos Aires',
-      ogDescription: 'Three days of debate, diplomacy, and leadership, run entirely by students. 13 committees in English and Spanish. Register now for October 2–4, 2026.',
+      title: 'LINCOLNMUN | Model United Nations Conference • Buenos Aires',
+      description: 'Student-run bilingual Model United Nations conference in Buenos Aires.',
+      ogTitle: 'LINCOLNMUN | Model United Nations Conference • Buenos Aires',
+      ogDescription: 'Student-run bilingual Model United Nations conference in Buenos Aires.',
     },
     nav: [
       { label: 'About',      href: '#about' },
@@ -98,10 +98,10 @@ export const T = {
 
   es: {
     meta: {
-      title: 'LINCOLNMUN | Modelo de Naciones Unidas (Modelo ONU) Bilingüe · Buenos Aires',
-      description: 'Modelo de Naciones Unidas bilingüe (Modelo ONU / MUN) en Asociación Escuelas Lincoln, Buenos Aires — 2 al 4 de octubre de 2026. El Modelo ONU bilingüe más equilibrado de Argentina, con 13 comités y abierto a todos los niveles.',
-      ogTitle: 'LINCOLNMUN | Modelo de Naciones Unidas (Modelo ONU) Bilingüe · Buenos Aires',
-      ogDescription: 'Tres días de debate, diplomacia y liderazgo en el Modelo ONU (MUN) bilingüe más equilibrado de Argentina, organizados enteramente por estudiantes. 13 comités en inglés y español. Inscribite para el 2 al 4 de octubre de 2026.',
+      title: 'LINCOLNMUN | Modelo de Naciones Unidas • Buenos Aires',
+      description: 'Modelo de Naciones Unidas bilingüe organizado por estudiantes en Buenos Aires.',
+      ogTitle: 'LINCOLNMUN | Modelo de Naciones Unidas • Buenos Aires',
+      ogDescription: 'Modelo de Naciones Unidas bilingüe organizado por estudiantes en Buenos Aires.',
     },
     nav: [
       { label: 'Sobre el Programa', href: '#about' },
