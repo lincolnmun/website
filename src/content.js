@@ -4,6 +4,12 @@
 
 export const T = {
   en: {
+    meta: {
+      title: 'LINCOLNMUN | Model United Nations Conference · Buenos Aires',
+      description: 'Model UN at Asociación Escuelas Lincoln, Buenos Aires — October 2–4, 2026. Most balanced bilingual, student-run conference with 13 committees, open to all levels of experience.',
+      ogTitle: 'LINCOLNMUN | Model United Nations Conference · Buenos Aires',
+      ogDescription: 'Three days of debate, diplomacy, and leadership, run entirely by students. 13 committees in English and Spanish. Register now for October 2–4, 2026.',
+    },
     nav: [
       { label: 'About',      href: '#about' },
       { label: 'Committees', href: '#committees' },
@@ -90,6 +96,12 @@ export const T = {
   },
 
   es: {
+    meta: {
+      title: 'LINCOLNMUN | Conferencia de Modelo de Naciones Unidas · Buenos Aires',
+      description: 'Modelo de Naciones Unidas bilingüe en Asociación Escuelas Lincoln, Buenos Aires — 2 al 4 de octubre de 2026. La conferencia estudiantil bilingüe más equilibrada de Argentina, con 13 comités y abierta a todos los niveles.',
+      ogTitle: 'LINCOLNMUN | Conferencia de Modelo de Naciones Unidas · Buenos Aires',
+      ogDescription: 'Tres días de debate, diplomacia y liderazgo, organizados enteramente por estudiantes. 13 comités en inglés y español. Inscribite para el 2 al 4 de octubre de 2026.',
+    },
     nav: [
       { label: 'Sobre Nosotros', href: '#about' },
       { label: 'Comités',        href: '#committees' },

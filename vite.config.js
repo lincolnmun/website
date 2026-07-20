@@ -2,7 +2,28 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+const escAttr = s => esc(s).replace(/"/g, '&quot;')
 const p = s => `<p>${esc(s)}</p>`
+
+const ORIGIN = 'https://lincolnmun.org'
+const url = lang => lang === 'es' ? `${ORIGIN}/es/` : `${ORIGIN}/`
+
+/* Per-language <head> SEO block: canonical, title, description, OG, and the
+   hreflang alternates (identical on both pages — reciprocity is what Google
+   requires). Replaces the <!--SEO--> marker in index.html. */
+function renderHead(lang, t) {
+  return [
+    `<link rel="canonical" href="${url(lang)}" />`,
+    `<title>${esc(t.meta.title)}</title>`,
+    `<meta name="description" content="${escAttr(t.meta.description)}" />`,
+    `<meta property="og:title" content="${escAttr(t.meta.ogTitle)}" />`,
+    `<meta property="og:description" content="${escAttr(t.meta.ogDescription)}" />`,
+    `<meta property="og:url" content="${url(lang)}" />`,
+    `<link rel="alternate" hreflang="en" href="${url('en')}" />`,
+    `<link rel="alternate" hreflang="es" href="${url('es')}" />`,
+    `<link rel="alternate" hreflang="x-default" href="${url('en')}" />`,
+  ].join('\n    ')
+}
 
 /* Build a semantic no-JS / SEO fallback from the site content (English).
    React clears #root on mount, so this is invisible to JS users. */
@@ -37,15 +58,33 @@ function renderFallback(t, committees, sg) {
   return parts.join('')
 }
 
+const fallbackDiv = block => `<div id="root"><div id="seo-fallback">${block}</div></div>`
+
 function seoFallback() {
+  // Load content fresh each build; cache-bust so the dev server picks up edits.
+  const content = () => import(new URL('./src/content.js', import.meta.url).href + '?t=' + Date.now())
   return {
     name: 'seo-fallback',
     async transformIndexHtml(html) {
-      // cache-bust so the dev server picks up edits to content.js on reload
-      const url = new URL('./src/content.js', import.meta.url).href + '?t=' + Date.now()
-      const { T, COMMITTEES, SG } = await import(url)
-      const block = renderFallback(T.en, COMMITTEES, SG)
-      return html.replace('<div id="root"></div>', `<div id="root"><div id="seo-fallback">${block}</div></div>`)
+      const { T, COMMITTEES, SG } = await content()
+      return html
+        .replace('<!--SEO-->', renderHead('en', T.en))
+        .replace('<div id="root"></div>', fallbackDiv(renderFallback(T.en, COMMITTEES, SG)))
+    },
+    // Emit the Spanish twin at /es/ by cloning the finished English HTML on
+    // disk and swapping lang, head, and fallback. writeBundle runs after Vite
+    // has written index.html (which generateBundle is too early to see).
+    async writeBundle(opts) {
+      const { readFile, mkdir, writeFile } = await import('node:fs/promises')
+      const { join } = await import('node:path')
+      const { T, COMMITTEES, SG } = await content()
+      const enHtml = await readFile(join(opts.dir, 'index.html'), 'utf8')
+      const es = enHtml
+        .replace('<html lang="en">', '<html lang="es">')
+        .replace(renderHead('en', T.en), renderHead('es', T.es))
+        .replace(fallbackDiv(renderFallback(T.en, COMMITTEES, SG)), fallbackDiv(renderFallback(T.es, COMMITTEES, SG)))
+      await mkdir(join(opts.dir, 'es'), { recursive: true })
+      await writeFile(join(opts.dir, 'es', 'index.html'), es)
     },
   }
 }

@@ -151,7 +151,7 @@ function Navbar() {
       {['en', 'es'].map((l, i) => (
         <span key={l} style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           {i === 1 && <span style={{ color: 'rgba(255,255,255,0.2)', fontSize: '0.6rem', margin: '0 4px' }}>|</span>}
-          <button onClick={() => setLang(l)} style={{
+          <button onClick={() => { if (l !== lang) location.href = (l === 'es' ? '/es/' : '/') + location.hash }} style={{
             background: 'none', border: 'none', cursor: 'pointer', padding: '2px 0',
             fontFamily: F.body, fontSize: '0.65rem', letterSpacing: '0.14em',
             fontWeight: lang === l ? 700 : 400,
@@ -872,7 +872,7 @@ function Footer() {
 
 /* ─── App ────────────────────────────────────────────────────────────────── */
 export default function App() {
-  const [lang, setLang] = useState('en')
+  const [lang, setLang] = useState(() => location.pathname.startsWith('/es') ? 'es' : 'en')
   return (
     <LangCtx.Provider value={{ lang, setLang }}>
       <style>{MOBILE_CSS}</style>
