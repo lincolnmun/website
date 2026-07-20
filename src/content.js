@@ -97,10 +97,10 @@ export const T = {
 
   es: {
     meta: {
-      title: 'LINCOLNMUN | Conferencia de Modelo de Naciones Unidas · Buenos Aires',
-      description: 'Modelo de Naciones Unidas bilingüe en Asociación Escuelas Lincoln, Buenos Aires — 2 al 4 de octubre de 2026. La conferencia estudiantil bilingüe más equilibrada de Argentina, con 13 comités y abierta a todos los niveles.',
-      ogTitle: 'LINCOLNMUN | Conferencia de Modelo de Naciones Unidas · Buenos Aires',
-      ogDescription: 'Tres días de debate, diplomacia y liderazgo, organizados enteramente por estudiantes. 13 comités en inglés y español. Inscribite para el 2 al 4 de octubre de 2026.',
+      title: 'LINCOLNMUN | Modelo de Naciones Unidas (Modelo ONU) Bilingüe · Buenos Aires',
+      description: 'Modelo de Naciones Unidas bilingüe (Modelo ONU / MUN) en Asociación Escuelas Lincoln, Buenos Aires — 2 al 4 de octubre de 2026. El Modelo ONU bilingüe más equilibrado de Argentina, con 13 comités y abierto a todos los niveles.',
+      ogTitle: 'LINCOLNMUN | Modelo de Naciones Unidas (Modelo ONU) Bilingüe · Buenos Aires',
+      ogDescription: 'Tres días de debate, diplomacia y liderazgo en el Modelo ONU (MUN) bilingüe más equilibrado de Argentina, organizados enteramente por estudiantes. 13 comités en inglés y español. Inscribite para el 2 al 4 de octubre de 2026.',
     },
     nav: [
       { label: 'Sobre Nosotros', href: '#about' },
@@ -112,7 +112,7 @@ export const T = {
     stats: ['Comités', 'Lugares para Delegados', 'Presidentes', 'Días de Conferencia', 'Idiomas'],
     about: {
       heading: ['¿Qué es', 'LINCOLNMUN?'],
-      p1: 'LINCOLNMUN es una conferencia de Modelo de Naciones Unidas de tres días, fundada por y para estudiantes secundarios de la región de Buenos Aires. Los delegados asumen los roles de representantes de la ONU, figuras históricas y personas influyentes para abordar desafíos globales mientras desarrollan habilidades de liderazgo y oratoria.',
+      p1: 'LINCOLNMUN es una conferencia de Modelo de Naciones Unidas (Modelo ONU) de tres días, fundada por y para estudiantes secundarios de la región de Buenos Aires. Los delegados asumen los roles de representantes de la ONU, figuras históricas y personas influyentes para abordar desafíos globales mientras desarrollan habilidades de liderazgo y oratoria.',
       p2: 'Desde la ceremonia de apertura hasta el asado de cierre, cada elemento de la conferencia está a cargo de estudiantes. Además de delegar, los estudiantes pueden postularse para presidir alguno de nuestros trece comités, una oportunidad única de asumir roles de liderazgo antes de que comiencen las sesiones.',
       p3: 'LINCOLNMUN da la bienvenida tanto a delegaciones con experiencia como a las que participan por primera vez, asignando a los delegados roles acordes al nivel de cada escuela. Bilingüe por diseño, dos tercios de nuestros comités se desarrollan en inglés y un tercio en español, lo que hace de LINCOLNMUN la conferencia de MUN bilingüe más equilibrada de Argentina.',
       tagline: 'Hecho por estudiantes, para estudiantes.',
