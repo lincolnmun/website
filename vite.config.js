@@ -45,7 +45,7 @@ function seoFallback() {
       const url = new URL('./src/content.js', import.meta.url).href + '?t=' + Date.now()
       const { T, COMMITTEES, SG } = await import(url)
       const block = renderFallback(T.en, COMMITTEES, SG)
-      return html.replace('<div id="root"></div>', `<div id="root">${block}</div>`)
+      return html.replace('<div id="root"></div>', `<div id="root"><div id="seo-fallback">${block}</div></div>`)
     },
   }
 }
