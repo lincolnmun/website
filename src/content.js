@@ -99,9 +99,9 @@ export const T = {
   es: {
     meta: {
       title: 'LINCOLNMUN | Conferencia de Modelo de Naciones Unidas',
-      description: 'Modelo de Naciones Unidas bilingüe organizado por estudiantes en Buenos Aires.',
+      description: 'Conferencia bilingüe de Modelo de Naciones Unidas (ONU) organizada por estudiantes en Buenos Aires, Argentina.',
       ogTitle: 'LINCOLNMUN | Conferencia de Modelo de Naciones Unidas',
-      ogDescription: 'Modelo de Naciones Unidas bilingüe organizado por estudiantes en Buenos Aires.',
+      ogDescription: 'Conferencia bilingüe de Modelo de Naciones Unidas (ONU) organizada por estudiantes en Buenos Aires, Argentina.',
     },
     nav: [
       { label: 'Sobre el Programa', href: '#about' },
