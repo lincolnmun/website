@@ -4,7 +4,7 @@
   <url>
     <loc>https://lincolnmun.org/</loc>
     <lastmod>2026-07-20</lastmod>
-    <changefreq>monthly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://lincolnmun.org/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://lincolnmun.org/es/" />
@@ -13,7 +13,7 @@
   <url>
     <loc>https://lincolnmun.org/es/</loc>
     <lastmod>2026-07-20</lastmod>
-    <changefreq>monthly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://lincolnmun.org/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://lincolnmun.org/es/" />
