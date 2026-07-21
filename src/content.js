@@ -5,9 +5,9 @@
 export const T = {
   en: {
     meta: {
-      title: 'LINCOLNMUN | Model United Nations Conference • Buenos Aires',
+      title: 'LINCOLNMUN | Model United Nations Conference',
       description: 'Student-run bilingual Model United Nations conference in Buenos Aires.',
-      ogTitle: 'LINCOLNMUN | Model United Nations Conference • Buenos Aires',
+      ogTitle: 'LINCOLNMUN | Model United Nations Conference',
       ogDescription: 'Student-run bilingual Model United Nations conference in Buenos Aires.',
     },
     nav: [
@@ -98,9 +98,9 @@ export const T = {
 
   es: {
     meta: {
-      title: 'LINCOLNMUN | Modelo de Naciones Unidas • Buenos Aires',
+      title: 'LINCOLNMUN | Conferencia de Modelo de Naciones Unidas',
       description: 'Modelo de Naciones Unidas bilingüe organizado por estudiantes en Buenos Aires.',
-      ogTitle: 'LINCOLNMUN | Modelo de Naciones Unidas • Buenos Aires',
+      ogTitle: 'LINCOLNMUN | Conferencia de Modelo de Naciones Unidas',
       ogDescription: 'Modelo de Naciones Unidas bilingüe organizado por estudiantes en Buenos Aires.',
     },
     nav: [
