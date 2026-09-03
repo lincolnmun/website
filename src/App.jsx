@@ -286,7 +286,7 @@ function Hero() {
 /* ─── Stats strip ────────────────────────────────────────────────────────── */
 function StatsStrip() {
   const tx = useT()
-  const vals = ['13', '300', '26', '3', '2']
+  const vals = ['13', '100', '26', '3', '2']
   const items = vals.map((v, i) => ({ v, l: tx.stats[i] }))
   return (
     <div style={{ background: C.navy, borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
