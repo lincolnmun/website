@@ -25,13 +25,13 @@ const MOBILE_CSS = `
       border-radius: 0 !important;
     }
     .countdown-unit { padding: 0.7rem 0.9rem !important; }
-    .stats-strip-grid { grid-template-columns: repeat(3, 1fr) !important; }
+    .stats-strip-grid { grid-template-columns: repeat(2, 1fr) !important; }
     #letter > div { max-width: 100% !important; }
   }
 
   /* ── Tablet  (768px – 1199px) ── */
   @media (min-width: 768px) and (max-width: 1199px) {
-    .stats-strip-grid { grid-template-columns: repeat(5, 1fr) !important; }
+    .stats-strip-grid { grid-template-columns: repeat(4, 1fr) !important; }
     .committee-modal-panel { max-width: 520px !important; }
   }
 
@@ -286,15 +286,15 @@ function Hero() {
 /* ─── Stats strip ────────────────────────────────────────────────────────── */
 function StatsStrip() {
   const tx = useT()
-  const vals = ['13', '100', '26', '3', '2']
+  const vals = ['6', '150', '2x', '2']
   const items = vals.map((v, i) => ({ v, l: tx.stats[i] }))
   return (
     <div style={{ background: C.navy, borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-      <div className="stats-strip-grid grid grid-cols-3 md:grid-cols-5" style={{ maxWidth: 1100, margin: '0 auto' }}>
+      <div className="stats-strip-grid grid grid-cols-2 md:grid-cols-4" style={{ maxWidth: 1100, margin: '0 auto' }}>
         {items.map(({ v, l }, i) => (
           <div key={l} style={{
             padding: 'clamp(2rem, 5vw, 5rem) 0.75rem', textAlign: 'center',
-            borderRight: i < 4 ? '1px solid rgba(255,255,255,0.05)' : 'none',
+            borderRight: i < items.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none',
           }}>
             <div style={{ fontFamily: F.display, fontSize: '2.8rem', fontWeight: 600, color: C.goldLight, lineHeight: 1 }}>{v}</div>
             <div style={{ fontFamily: F.body, fontSize: '0.85rem', letterSpacing: '0.17em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.33)', marginTop: 6 }}>{l}</div>

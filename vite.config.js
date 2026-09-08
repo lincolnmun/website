@@ -35,8 +35,8 @@ function renderJsonLd(lang, t) {
     name: 'LINCOLNMUN',
     description: t.meta.description,
     inLanguage: lang,
-    startDate: '2026-10-02',
-    endDate: '2026-10-04',
+    startDate: '2026-10-25',
+    endDate: '2026-10-26',
     eventStatus: 'https://schema.org/EventScheduled',
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     location: {
