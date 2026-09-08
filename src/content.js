@@ -40,7 +40,7 @@ export const T = {
       days: [
         { day: 'Day 1', date: 'Sunday, 25 October', sessions: [
           { time: '08:00 – 08:30', activity: 'Reception  ·  Lobby' },
-          { time: '08:30 – 09:30', activity: 'Opening Ceremony  ·  Auditorium' },
+          { time: '08:30 – 09:30', activity: 'Opening Ceremony  ·  Theatre' },
           { time: '09:30 – 09:35', activity: 'Break' },
           { time: '09:35 – 10:35', activity: 'Committee Session 1' },
           { time: '10:35 – 10:40', activity: 'Break' },
@@ -65,9 +65,9 @@ export const T = {
           { time: '11:25 – 12:25', activity: 'Committee Session 10' },
           { time: '12:25 – 12:30', activity: 'Break' },
           { time: '12:30 – 14:00', activity: 'Committee Session 11' },
-          { time: '14:00 – 16:30', activity: 'Asado & Social Lunch  ·  Middle School Field' },
+          { time: '14:00 – 16:30', activity: 'Asado & Social Lunch  ·  Field' },
           { time: '16:30 – 18:00', activity: 'Committee Session 12' },
-          { time: '18:00 – 19:00', activity: 'Closing Ceremony  ·  Auditorium' },
+          { time: '18:00 – 19:00', activity: 'Closing Ceremony  ·  Theatre' },
           { time: '19:00',         activity: 'Conference Closure' },
         ]},
       ],
@@ -136,7 +136,7 @@ export const T = {
       days: [
         { day: 'Día 1', date: 'Domingo, 25 de octubre', sessions: [
           { time: '08:00 – 08:30', activity: 'Recepción  ·  Lobby' },
-          { time: '08:30 – 09:30', activity: 'Ceremonia de Apertura  ·  Auditorio' },
+          { time: '08:30 – 09:30', activity: 'Ceremonia de Apertura  ·  Teatro' },
           { time: '09:30 – 09:35', activity: 'Descanso' },
           { time: '09:35 – 10:35', activity: 'Sesión de Comité 1' },
           { time: '10:35 – 10:40', activity: 'Descanso' },
@@ -161,9 +161,9 @@ export const T = {
           { time: '11:25 – 12:25', activity: 'Sesión de Comité 10' },
           { time: '12:25 – 12:30', activity: 'Descanso' },
           { time: '12:30 – 14:00', activity: 'Sesión de Comité 11' },
-          { time: '14:00 – 16:30', activity: 'Asado y Almuerzo Social  ·  Campo de Middle School' },
+          { time: '14:00 – 16:30', activity: 'Asado y Almuerzo Social  ·  Campo' },
           { time: '16:30 – 18:00', activity: 'Sesión de Comité 12' },
-          { time: '18:00 – 19:00', activity: 'Ceremonia de Cierre  ·  Auditorio' },
+          { time: '18:00 – 19:00', activity: 'Ceremonia de Cierre  ·  Teatro' },
           { time: '19:00',         activity: 'Cierre de la Conferencia' },
         ]},
       ],
