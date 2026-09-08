@@ -244,7 +244,7 @@ function Navbar() {
 
 /* ─── Hero ──────────────────────────────────────────────────────────────── */
 function Hero() {
-  useCountdown('2026-10-02T16:00:00-03:00')
+  useCountdown('2026-10-25T08:00:00-03:00')
   const tx = useT()
 
   return (
@@ -536,45 +536,23 @@ function CommitteeModal({ c, onClose }) {
 }
 
 function Committees() {
-  const [active, setActive] = useState('en')
   const [modal, setModal] = useState(null)
   const tx = useT()
-  const filtered = active ? COMMITTEES.filter(c => c.lang === active) : COMMITTEES
+  const filtered = COMMITTEES
 
-  const toggleLang = (key) => setActive(prev => prev === key ? null : key)
   const handleToggle = (abbr) => setModal(abbr)
 
   return (
     <section id="committees" style={{ background: C.navy, padding: 'clamp(3rem, 7vw, 7rem) clamp(1.1rem, 3.5vw, 2.5rem)' }}>
       <div style={{ maxWidth: 1100, margin: '0 auto' }}>
         <Reveal>
-          <div className="flex flex-col md:flex-row md:items-end" style={{ justifyContent: 'space-between', gap: '2rem', marginBottom: '1.5rem' }}>
-            <motion.h2 variants={fadeUp} style={{
-              fontFamily: F.display, fontWeight: 600, color: C.white,
-              fontSize: 'clamp(2.25rem, 4vw, 3.5rem)', lineHeight: 1.08, letterSpacing: '-0.02em',
-            }}>
-              {tx.committees.heading}
-            </motion.h2>
-
-            <motion.div variants={fadeUp} style={{ display: 'flex', gap: '0.25rem' }}>
-              {tx.committees.filters.map(({ key, label }) => {
-                const on = active === key
-                return (
-                  <button key={key} onClick={() => toggleLang(key)} aria-pressed={on} style={{
-                    border: `1px solid ${on ? C.goldLight : 'rgba(255,255,255,0.15)'}`,
-                    cursor: 'pointer', background: on ? C.goldLight : 'transparent',
-                    padding: '0.5rem 1.2rem',
-                    fontFamily: F.body, fontWeight: 600, fontSize: '0.72rem',
-                    letterSpacing: '0.1em', textTransform: 'uppercase',
-                    color: on ? C.navy : 'rgba(255,255,255,0.5)',
-                    transition: 'all 0.18s',
-                  }}>
-                    {label}
-                  </button>
-                )
-              })}
-            </motion.div>
-          </div>
+          <motion.h2 variants={fadeUp} style={{
+            fontFamily: F.display, fontWeight: 600, color: C.white,
+            fontSize: 'clamp(2.25rem, 4vw, 3.5rem)', lineHeight: 1.08, letterSpacing: '-0.02em',
+            marginBottom: '1.5rem',
+          }}>
+            {tx.committees.heading}
+          </motion.h2>
         </Reveal>
 
         <motion.div layout
@@ -609,7 +587,7 @@ function Committees() {
 
 /* ─── Countdown band  ─────────────────── */
 function Countdown() {
-  const { d, h, m, s } = useCountdown('2026-10-02T16:00:00-03:00')
+  const { d, h, m, s } = useCountdown('2026-10-25T08:00:00-03:00')
   const units = [{ v: d, l: 'Days' }, { v: h, l: 'Hours' }, { v: m, l: 'Minutes' }, { v: s, l: 'Seconds' }]
   return (
     // ponytail: 50/50 gradient puts the color seam through the vertical center of the band;
